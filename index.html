@@ -68,8 +68,12 @@
         .view.hidden {
             opacity: 0;
             transform: scale(0.98);
-            display: none;
+            pointer-events: none; /* Cegah interaksi saat hidden */
         }
+         .view:not(.hidden) {
+            pointer-events: auto;
+        }
+
 
         .tab-content { transition: opacity 0.5s ease-in-out; }
         .tab-content.hidden { display: none; }
@@ -78,7 +82,7 @@
 <body class="antialiased text-slate-800">
 
     <!-- Container Utama -->
-    <div class="container mx-auto p-4 md:p-8">
+    <div class="container mx-auto p-4 md:p-8 relative">
 
         <!-- 1. Tampilan Pemilihan Peran -->
         <div id="role-selection-view" class="view min-h-screen flex items-center justify-center">
@@ -90,24 +94,42 @@
                 <p class="text-slate-600 mb-8">Pilih peranmu untuk masuk!</p>
         
                 <div class="space-y-4">
-                    <button id="login-siswa-btn" class="w-full bg-cyan-400 text-[#01579b] font-semibold py-3 px-4 rounded-lg hover:bg-cyan-500 btn-water flex items-center justify-center gap-2">
+                    <button id="show-login-siswa-btn" class="w-full bg-cyan-400 text-[#01579b] font-semibold py-3 px-4 rounded-lg hover:bg-cyan-500 btn-water flex items-center justify-center gap-2">
                         <i data-lucide="water" class="w-5 h-5"></i>
                         Masuk sebagai Siswa
                     </button>
-                    <button id="login-admin-btn" class="w-full bg-blue-400 text-[#01579b] font-semibold py-3 px-4 rounded-lg hover:bg-blue-500 btn-water flex items-center justify-center gap-2">
+                    <button id="show-login-admin-btn" class="w-full bg-blue-400 text-[#01579b] font-semibold py-3 px-4 rounded-lg hover:bg-blue-500 btn-water flex items-center justify-center gap-2">
                         <i data-lucide="anchor" class="w-5 h-5"></i>
                         Masuk sebagai Admin
                     </button>
                 </div>
-                <!-- Form login admin -->
-                <div id="admin-login-form" class="mt-8 hidden">
-                    <div class="bg-blue-100 p-6 rounded-xl border-4 border-[#01579b]">
-                        <h3 class="text-lg font-semibold text-[#01579b] mb-4">Login Admin</h3>
-                        <input type="password" id="admin-password-input" class="w-full px-4 py-2 rounded-lg border-2 border-[#01579b] bg-white text-[#01579b] focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Password rahasia..." required>
-                        <button id="admin-login-btn-submit" class="w-full mt-4 bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-600 btn-water">Masuk!</button>
-                        <p id="admin-login-error" class="text-red-500 text-sm mt-2 hidden">Salah password, coba lagi ya!</p>
-                    </div>
-                </div>
+            </div>
+        </div>
+
+        <!-- 1a. Tampilan Login Siswa -->
+        <div id="student-login-view" class="view hidden min-h-screen flex items-center justify-center">
+            <div class="text-center bg-white p-8 md:p-12 rounded-2xl shadow-2xl max-w-md w-full mx-4 card-water">
+                <h2 class="text-2xl font-bold text-[#01579b] mb-6">Login Siswa</h2>
+                <form id="student-login-form" class="space-y-4">
+                    <input type="text" id="student-username-input" class="w-full px-4 py-2 rounded-lg border-2 border-[#01579b] bg-white text-[#01579b] focus:outline-none focus:ring-2 focus:ring-cyan-500" placeholder="Username" required>
+                    <input type="password" id="student-password-input" class="w-full px-4 py-2 rounded-lg border-2 border-[#01579b] bg-white text-[#01579b] focus:outline-none focus:ring-2 focus:ring-cyan-500" placeholder="Password" required>
+                    <button type="submit" class="w-full bg-cyan-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-cyan-600 btn-water">Login</button>
+                </form>
+                <p id="student-login-error" class="text-red-500 text-sm mt-2 hidden">Username atau password salah!</p>
+                <button id="back-to-role-selection-btn" class="mt-4 text-sm text-slate-600 hover:text-blue-600">Kembali ke pemilihan peran</button>
+            </div>
+        </div>
+
+        <!-- 1b. Tampilan Login Admin -->
+        <div id="admin-login-view" class="view hidden min-h-screen flex items-center justify-center">
+             <div class="text-center bg-white p-8 md:p-12 rounded-2xl shadow-2xl max-w-md w-full mx-4 card-water">
+                <h2 class="text-2xl font-bold text-[#01579b] mb-6">Login Admin</h2>
+                <form id="admin-login-form" class="space-y-4">
+                    <input type="password" id="admin-password-input" class="w-full px-4 py-2 rounded-lg border-2 border-[#01579b] bg-white text-[#01579b] focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Password rahasia..." required>
+                    <button type="submit" class="w-full bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-600 btn-water">Masuk!</button>
+                </form>
+                <p id="admin-login-error" class="text-red-500 text-sm mt-2 hidden">Salah password, coba lagi ya!</p>
+                <button id="back-to-role-selection-btn2" class="mt-4 text-sm text-slate-600 hover:text-blue-600">Kembali ke pemilihan peran</button>
             </div>
         </div>
 
@@ -117,7 +139,7 @@
                 <div class="inline-flex items-center gap-3 bg-white p-3 rounded-full shadow-lg border-4 border-[#01579b] [transform:rotate(3deg)]">
                     <i data-lucide="water" class="w-10 h-10 text-cyan-400"></i>
                     <div>
-                        <h1 class="text-xl md:text-2xl font-bold text-cyan-500">Dasbor Siswa</h1>
+                        <h1 id="student-name-display" class="text-xl md:text-2xl font-bold text-cyan-500">Dasbor Siswa</h1>
                         <p id="student-id-display" class="text-xs text-slate-500"></p>
                     </div>
                 </div>
@@ -139,7 +161,6 @@
                             <div class="bg-blue-50 p-6 rounded-lg border-4 border-[#01579b] [transform:rotate(2deg)]">
                                 <h3 class="font-bold text-lg mb-4 text-blue-600">Formulir Janji Temu</h3>
                                 <form id="appointment-form" class="space-y-4">
-                                    <div><label for="nama" class="block text-sm">Nama Lengkap</label><input type="text" id="nama" class="mt-1 block w-full px-3 py-2 border-2 rounded-md border-[#01579b]" required></div>
                                     <div><label for="kelas" class="block text-sm">Kelas</label><input type="text" id="kelas" class="mt-1 block w-full px-3 py-2 border-2 rounded-md border-[#01579b]" required></div>
                                     <div><label for="topik" class="block text-sm">Topik Konseling</label><select id="topik" class="mt-1 block w-full px-3 py-2 border-2 rounded-md border-[#01579b]"><option>Masalah Akademik</option><option>Masalah Pribadi/Keluarga</option><option>Perencanaan Karir</option><option>Lainnya</option></select></div>
                                     <div><label for="tanggal" class="block text-sm">Pilih Tanggal & Waktu</label><input type="datetime-local" id="tanggal" class="mt-1 block w-full px-3 py-2 border-2 rounded-md border-[#01579b]" required></div>
@@ -216,7 +237,8 @@
                     <button data-tab="chat" class="tab-water flex-1 p-4 text-center text-sm md:text-base border-r border-dashed border-[#01579b]">Chat Privat</button>
                     <button data-tab="materi" class="tab-water flex-1 p-4 text-center text-sm md:text-base border-r border-dashed border-[#01579b]">Materi</button>
                     <button data-tab="proposal" class="tab-water flex-1 p-4 text-center text-sm md:text-base border-r border-dashed border-[#01579b]">Proposal OSIS</button>
-                    <button data-tab="keuangan" class="tab-water flex-1 p-4 text-center text-sm md:text-base">Laporan Keuangan</button>
+                    <button data-tab="keuangan" class="tab-water flex-1 p-4 text-center text-sm md:text-base border-r border-dashed border-[#01579b]">Laporan Keuangan</button>
+                    <button data-tab="users" class="tab-water flex-1 p-4 text-center text-sm md:text-base">Kelola User</button>
                 </nav>
                 <div class="p-4 md:p-8">
                     <!-- Tab Janji Temu -->
@@ -291,6 +313,18 @@
                         <h3 class="font-bold text-lg mb-4 text-slate-700">Riwayat Transaksi</h3>
                         <div id="keuangan-list-admin" class="space-y-4 max-h-[40vh] overflow-y-auto pr-2"></div>
                     </div>
+                    <!-- Tab Kelola User -->
+                    <div id="users-admin" class="tab-content hidden">
+                        <h3 class="font-bold text-2xl mb-4 text-purple-600">Manajemen User Siswa</h3>
+                         <form id="create-user-form" class="bg-purple-50 p-6 rounded-lg border-4 border-[#01579b] space-y-4 mb-8">
+                            <div><label for="user-nama" class="block text-sm">Nama Lengkap Siswa</label><input type="text" id="user-nama" class="mt-1 block w-full px-3 py-2 border-2 rounded-md border-[#01579b]" required></div>
+                            <div><label for="user-username" class="block text-sm">Username</label><input type="text" id="user-username" class="mt-1 block w-full px-3 py-2 border-2 rounded-md border-[#01579b]" required></div>
+                            <div><label for="user-password" class="block text-sm">Password</label><input type="password" id="user-password" class="mt-1 block w-full px-3 py-2 border-2 rounded-md border-[#01579b]" required></div>
+                            <button type="submit" class="w-full bg-purple-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-purple-600 btn-water">Buat Akun Siswa</button>
+                        </form>
+                        <p class="text-sm text-slate-500 mb-6">Di sini Anda dapat melihat dan menghapus data siswa. Menghapus user akan menghapus semua data terkait, termasuk janji temu dan riwayat chat.</p>
+                        <div id="user-list-admin" class="space-y-4 max-h-[60vh] overflow-y-auto pr-2"></div>
+                    </div>
                 </div>
             </main>
         </div>
@@ -302,15 +336,23 @@
 
             // === Elemen Tampilan ===
             const roleSelectionView = document.getElementById('role-selection-view');
+            const studentLoginView = document.getElementById('student-login-view');
+            const adminLoginView = document.getElementById('admin-login-view');
             const siswaView = document.getElementById('siswa-view');
             const adminView = document.getElementById('admin-view');
+
+            const studentLoginForm = document.getElementById('student-login-form');
+            const studentUsernameInput = document.getElementById('student-username-input');
+            const studentPasswordInput = document.getElementById('student-password-input');
+            const studentLoginError = document.getElementById('student-login-error');
+            
             const adminLoginForm = document.getElementById('admin-login-form');
             const adminPasswordInput = document.getElementById('admin-password-input');
             const adminLoginError = document.getElementById('admin-login-error');
 
-            const loginSiswaBtn = document.getElementById('login-siswa-btn');
-            const loginAdminBtn = document.getElementById('login-admin-btn');
-            const adminLoginSubmitBtn = document.getElementById('admin-login-btn-submit');
+            const showLoginSiswaBtn = document.getElementById('show-login-siswa-btn');
+            const showLoginAdminBtn = document.getElementById('show-login-admin-btn');
+            const backToRoleBtns = document.querySelectorAll('#back-to-role-selection-btn, #back-to-role-selection-btn2');
             const logoutBtns = document.querySelectorAll('.logout-btn');
 
             const siswaTabs = siswaView.querySelectorAll('.tab-water');
@@ -320,9 +362,7 @@
 
             // === Fungsi Pengalih Tampilan ===
             const showView = (viewToShow) => {
-                roleSelectionView.classList.add('hidden');
-                siswaView.classList.add('hidden');
-                adminView.classList.add('hidden');
+                [roleSelectionView, studentLoginView, adminLoginView, siswaView, adminView].forEach(v => v.classList.add('hidden'));
                 viewToShow.classList.remove('hidden');
             };
 
@@ -341,6 +381,16 @@
             };
 
             // === Fungsi Bersama (Shared Functions) ===
+            const getStudentData = (id) => {
+                const accounts = JSON.parse(localStorage.getItem('studentAccounts') || '[]');
+                return accounts.find(acc => acc.id === id);
+            };
+            
+            const getStudentName = (id) => {
+                const studentData = getStudentData(id);
+                return studentData ? studentData.name : id;
+            };
+
             const getStatusBadge = (status) => {
                 switch (status) {
                     case 'Dikonfirmasi': return '<span class="text-xs font-bold bg-green-200 text-green-800 px-2 py-1 rounded-full border border-green-800">Dikonfirmasi</span>';
@@ -371,6 +421,7 @@
             // === LOGIKA UNTUK SISWA ======
             // =============================
             const studentIdDisplay = document.getElementById('student-id-display');
+            const studentNameDisplay = document.getElementById('student-name-display');
             const appointmentForm = document.getElementById('appointment-form');
             const appointmentList = document.getElementById('appointment-list');
             const successMessage = document.getElementById('success-message');
@@ -387,12 +438,16 @@
             let studentId;
 
             function initSiswaView() {
-                // Menggunakan localStorage untuk menyimpan ID siswa secara persisten
                 studentId = localStorage.getItem('studentId');
                 if (!studentId) {
-                    studentId = 'siswa-' + Math.random().toString(36).substr(2, 6);
-                    localStorage.setItem('studentId', studentId);
+                    // Jika tidak ada studentId, kembali ke halaman login
+                    showView(roleSelectionView);
+                    return;
                 }
+                const studentData = getStudentData(studentId);
+                const studentName = studentData ? studentData.name : 'Siswa';
+                
+                studentNameDisplay.textContent = `Selamat Datang, ${studentName}`;
                 studentIdDisplay.textContent = `ID Sesi: ${studentId}`;
                 renderStudentAppointments();
                 renderSiswaChat();
@@ -452,7 +507,6 @@
                 });
             };
             
-            // Render Proposals for Students
             const renderProposalListSiswa = () => {
                 const proposals = JSON.parse(localStorage.getItem('proposals') || '[]');
                 proposalListSiswa.innerHTML = '';
@@ -472,7 +526,6 @@
                 });
             };
 
-            // Render Financial Report for Students
             const renderKeuanganListSiswa = () => {
                 const keuangan = JSON.parse(localStorage.getItem('keuangan') || '[]');
                 keuanganListSiswa.innerHTML = '';
@@ -513,15 +566,17 @@
             appointmentForm.addEventListener('submit', (e) => {
                 e.preventDefault();
                 const allAppointments = JSON.parse(localStorage.getItem('appointments') || '[]');
+                const studentData = getStudentData(studentId);
                 const newAppointment = {
                     id: 'app-' + Date.now(), studentId, status: 'Menunggu',
-                    name: document.getElementById('nama').value,
+                    name: studentData.name, // Ambil nama dari data akun
                     class: document.getElementById('kelas').value,
                     topic: document.getElementById('topik').value,
                     date: document.getElementById('tanggal').value,
                 };
                 allAppointments.push(newAppointment);
                 localStorage.setItem('appointments', JSON.stringify(allAppointments));
+
                 appointmentForm.reset();
                 successMessage.classList.remove('hidden');
                 setTimeout(() => successMessage.classList.add('hidden'), 3000);
@@ -578,6 +633,8 @@
             const totalPengeluaranAdminEl = document.getElementById('total-pengeluaran-admin');
             const saldoAkhirAdminEl = document.getElementById('saldo-akhir-admin');
             const keuanganListAdmin = document.getElementById('keuangan-list-admin');
+            const createUserForm = document.getElementById('create-user-form');
+            const userListAdmin = document.getElementById('user-list-admin');
 
             let selectedStudentId = null;
             const adminPassword = 'admin123'; // Password admin
@@ -588,6 +645,7 @@
                 renderMateriListAdmin();
                 renderProposalListAdmin();
                 renderKeuanganListAdmin();
+                renderUserListAdmin();
                 showView(adminView);
             }
             
@@ -606,7 +664,6 @@
                         <div class="md:col-span-2">
                             <p class="font-bold text-blue-600">${app.name} <span class="font-normal text-slate-500">- ${app.class}</span></p>
                             <p class="text-sm text-cyan-600 font-bold">${app.topic}</p>
-                            <p class="text-xs text-slate-400 mt-1">${app.studentId}</p>
                         </div>
                         <div><p class="font-bold">${date.toLocaleDateString('id-ID', {day: 'numeric', month: 'long'})}, ${date.toLocaleTimeString('id-ID', {hour:'2-digit', minute:'2-digit'})}</p>${getStatusBadge(app.status)}</div>
                         <div class="flex gap-2 justify-start md:justify-end">
@@ -620,18 +677,21 @@
             };
 
             const renderAdminChatUsers = () => {
-                const allChats = JSON.parse(localStorage.getItem('chats') || '{}');
-                const studentIds = Object.keys(allChats);
+                const studentAccounts = JSON.parse(localStorage.getItem('studentAccounts') || '[]');
                 chatStudentSelect.innerHTML = '<option value="">Pilih Siswa...</option>';
-                studentIds.forEach(id => {
+                studentAccounts.forEach(acc => {
                     const option = document.createElement('option');
-                    option.value = id;
-                    option.textContent = id;
+                    option.value = acc.id;
+                    option.textContent = acc.name;
                     chatStudentSelect.appendChild(option);
                 });
-                if (studentIds.length > 0) {
-                    selectedStudentId = studentIds[0];
-                    chatStudentSelect.value = selectedStudentId;
+
+                if (studentAccounts.length > 0) {
+                    const currentSelection = chatStudentSelect.value;
+                    if (!studentAccounts.find(s => s.id === currentSelection)) {
+                        selectedStudentId = studentAccounts[0].id;
+                        chatStudentSelect.value = selectedStudentId;
+                    }
                     renderAdminChat();
                 } else {
                     selectedStudentId = null;
@@ -673,11 +733,10 @@
                         </button>
                     `;
                     materiListAdmin.appendChild(el);
-                    lucide.createIcons(); // Re-render icons for new elements
+                    lucide.createIcons();
                 });
             };
 
-            // Proposal & Keuangan Functions
             const renderProposalListAdmin = () => {
                 const proposals = JSON.parse(localStorage.getItem('proposals') || '[]');
                 proposalListAdmin.innerHTML = '';
@@ -742,6 +801,30 @@
                 totalPemasukanAdminEl.textContent = formatRupiah(totalPemasukan);
                 totalPengeluaranAdminEl.textContent = formatRupiah(totalPengeluaran);
                 saldoAkhirAdminEl.textContent = formatRupiah(totalPemasukan - totalPengeluaran);
+            };
+
+            const renderUserListAdmin = () => {
+                const allAccounts = JSON.parse(localStorage.getItem('studentAccounts') || '[]');
+                userListAdmin.innerHTML = '';
+                if (allAccounts.length === 0) {
+                    userListAdmin.innerHTML = '<p class="text-center text-slate-500">Belum ada akun siswa yang dibuat.</p>';
+                    return;
+                }
+                allAccounts.forEach(acc => {
+                    const el = document.createElement('div');
+                    el.className = 'p-4 bg-white rounded-lg shadow-md border-2 border-purple-600 flex justify-between items-center';
+                    el.innerHTML = `
+                        <div>
+                            <h4 class="font-bold text-lg text-purple-600">${acc.name}</h4>
+                            <p class="text-xs text-slate-500">Username: ${acc.username}</p>
+                        </div>
+                        <button data-id="${acc.id}" class="delete-user-btn bg-red-500 text-white p-2 rounded-full hover:bg-red-600 btn-water">
+                            <i data-lucide="trash-2" class="w-5 h-5"></i>
+                        </button>
+                    `;
+                    userListAdmin.appendChild(el);
+                    lucide.createIcons();
+                });
             };
 
             const updateAppointmentStatus = (id, newStatus) => {
@@ -873,6 +956,51 @@
                 }
             });
 
+            createUserForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const accounts = JSON.parse(localStorage.getItem('studentAccounts') || '[]');
+                const username = document.getElementById('user-username').value;
+
+                if (accounts.some(acc => acc.username === username)) {
+                    alert('Username sudah digunakan!');
+                    return;
+                }
+
+                const newAccount = {
+                    id: 'siswa-' + Date.now(),
+                    name: document.getElementById('user-nama').value,
+                    username: username,
+                    password: document.getElementById('user-password').value,
+                };
+                accounts.push(newAccount);
+                localStorage.setItem('studentAccounts', JSON.stringify(accounts));
+                createUserForm.reset();
+                renderUserListAdmin();
+            });
+
+            userListAdmin.addEventListener('click', (e) => {
+                const deleteBtn = e.target.closest('.delete-user-btn');
+                if (deleteBtn) {
+                    const idToDelete = deleteBtn.getAttribute('data-id');
+                    
+                    let accounts = JSON.parse(localStorage.getItem('studentAccounts') || '[]');
+                    accounts = accounts.filter(acc => acc.id !== idToDelete);
+                    localStorage.setItem('studentAccounts', JSON.stringify(accounts));
+                    
+                    let appointments = JSON.parse(localStorage.getItem('appointments') || '[]');
+                    appointments = appointments.filter(app => app.studentId !== idToDelete);
+                    localStorage.setItem('appointments', JSON.stringify(appointments));
+
+                    let chats = JSON.parse(localStorage.getItem('chats') || '{}');
+                    delete chats[idToDelete];
+                    localStorage.setItem('chats', JSON.stringify(chats));
+
+                    renderUserListAdmin();
+                    renderAdminAppointments();
+                    renderAdminChatUsers();
+                }
+            });
+
             adminTabs.forEach(tab => {
                 tab.addEventListener('click', () => {
                     switchTab(adminTabs, adminTabContents, tab.getAttribute('data-tab'));
@@ -880,27 +1008,36 @@
                     if (tab.getAttribute('data-tab') === 'materi') renderMateriListAdmin();
                     if (tab.getAttribute('data-tab') === 'proposal') renderProposalListAdmin();
                     if (tab.getAttribute('data-tab') === 'keuangan') renderKeuanganListAdmin();
+                    if (tab.getAttribute('data-tab') === 'users') renderUserListAdmin();
                 });
             });
 
             // ======================================
             // === KONTROL NAVIGASI & INISIASI ======
             // ======================================
-            loginSiswaBtn.addEventListener('click', () => {
-                // Menggunakan localStorage untuk mengingat peran
-                localStorage.setItem('userRole', 'siswa');
-                initSiswaView();
-            });
+            showLoginSiswaBtn.addEventListener('click', () => showView(studentLoginView));
+            showLoginAdminBtn.addEventListener('click', () => showView(adminLoginView));
+            backToRoleBtns.forEach(btn => btn.addEventListener('click', () => showView(roleSelectionView)));
 
-            loginAdminBtn.addEventListener('click', () => {
-                // Tampilkan form password untuk admin
-                adminLoginForm.classList.remove('hidden');
-                loginSiswaBtn.classList.add('hidden');
-                loginAdminBtn.classList.add('hidden');
-                adminPasswordInput.focus();
+            studentLoginForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const username = studentUsernameInput.value;
+                const password = studentPasswordInput.value;
+                const accounts = JSON.parse(localStorage.getItem('studentAccounts') || '[]');
+                const account = accounts.find(acc => acc.username === username && acc.password === password);
+                
+                if (account) {
+                    studentLoginError.classList.add('hidden');
+                    localStorage.setItem('userRole', 'siswa');
+                    localStorage.setItem('studentId', account.id);
+                    initSiswaView();
+                } else {
+                    studentLoginError.classList.remove('hidden');
+                }
             });
-
-            adminLoginSubmitBtn.addEventListener('click', () => {
+            
+            adminLoginForm.addEventListener('submit', (e) => {
+                e.preventDefault();
                 if (adminPasswordInput.value === adminPassword) {
                     adminLoginError.classList.add('hidden');
                     localStorage.setItem('userRole', 'admin');
@@ -911,26 +1048,14 @@
                 }
             });
 
-            adminPasswordInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    adminLoginSubmitBtn.click();
-                }
-            });
-
             logoutBtns.forEach(btn => {
                 btn.addEventListener('click', () => {
-                    // Saat logout, hapus semua data dari localStorage
                     localStorage.removeItem('userRole');
                     localStorage.removeItem('studentId');
-                    // Reset tampilan kembali ke awal
-                    adminLoginForm.classList.add('hidden');
-                    loginSiswaBtn.classList.remove('hidden');
-                    loginAdminBtn.classList.remove('hidden');
                     showView(roleSelectionView);
                 });
             });
 
-            // Cek jika user sudah memilih peran sebelumnya (misal setelah refresh halaman)
             const savedRole = localStorage.getItem('userRole');
             if (savedRole === 'siswa') {
                 initSiswaView();
@@ -940,22 +1065,13 @@
                 showView(roleSelectionView);
             }
 
-            // Listener untuk update antar tab/jendela browser
             window.addEventListener('storage', (e) => {
-                if (e.key === 'appointments' || e.key === 'chats' || e.key === 'materi' || e.key === 'proposals' || e.key === 'keuangan') {
-                    const currentRole = localStorage.getItem('userRole');
+                const currentRole = localStorage.getItem('userRole');
+                if (e.key === 'studentAccounts' || e.key === 'appointments' || e.key === 'chats' || e.key === 'materi' || e.key === 'proposals' || e.key === 'keuangan') {
                     if (currentRole === 'siswa') {
-                        renderStudentAppointments();
-                        renderSiswaChat();
-                        renderMateriListSiswa();
-                        renderProposalListSiswa();
-                        renderKeuanganListSiswa();
+                        initSiswaView();
                     } else if (currentRole === 'admin') {
-                        renderAdminAppointments();
-                        renderAdminChatUsers();
-                        renderMateriListAdmin();
-                        renderProposalListAdmin();
-                        renderKeuanganListAdmin();
+                        initAdminView();
                     }
                 }
             });
@@ -964,3 +1080,4 @@
     </script>
 </body>
 </html>
+
