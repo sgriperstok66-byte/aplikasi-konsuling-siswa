@@ -98,6 +98,10 @@
                         <i data-lucide="water" class="w-5 h-5"></i>
                         Masuk sebagai Siswa
                     </button>
+                    <button id="show-login-guru-bk-btn" class="w-full bg-teal-400 text-[#01579b] font-semibold py-3 px-4 rounded-lg hover:bg-teal-500 btn-water flex items-center justify-center gap-2">
+                        <i data-lucide="user-check" class="w-5 h-5"></i>
+                        Masuk sebagai Guru BK
+                    </button>
                     <button id="show-login-admin-btn" class="w-full bg-blue-400 text-[#01579b] font-semibold py-3 px-4 rounded-lg hover:bg-blue-500 btn-water flex items-center justify-center gap-2">
                         <i data-lucide="anchor" class="w-5 h-5"></i>
                         Masuk sebagai Admin
@@ -119,8 +123,22 @@
                 <button id="back-to-role-selection-btn" class="mt-4 text-sm text-slate-600 hover:text-blue-600">Kembali ke pemilihan peran</button>
             </div>
         </div>
+        
+        <!-- 1b. Tampilan Login Guru BK -->
+        <div id="guru-bk-login-view" class="view hidden min-h-screen flex items-center justify-center">
+            <div class="text-center bg-white p-8 md:p-12 rounded-2xl shadow-2xl max-w-md w-full mx-4 card-water">
+                <h2 class="text-2xl font-bold text-teal-600 mb-6">Login Guru BK</h2>
+                <form id="guru-bk-login-form" class="space-y-4">
+                    <input type="text" id="guru-bk-username-input" class="w-full px-4 py-2 rounded-lg border-2 border-[#01579b] bg-white text-[#01579b] focus:outline-none focus:ring-2 focus:ring-teal-500" placeholder="Username" required>
+                    <input type="password" id="guru-bk-password-input" class="w-full px-4 py-2 rounded-lg border-2 border-[#01579b] bg-white text-[#01579b] focus:outline-none focus:ring-2 focus:ring-teal-500" placeholder="Password" required>
+                    <button type="submit" class="w-full bg-teal-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-teal-600 btn-water">Login</button>
+                </form>
+                <p id="guru-bk-login-error" class="text-red-500 text-sm mt-2 hidden">Username atau password salah!</p>
+                <button id="back-to-role-selection-btn-guru" class="mt-4 text-sm text-slate-600 hover:text-blue-600">Kembali ke pemilihan peran</button>
+            </div>
+        </div>
 
-        <!-- 1b. Tampilan Login Admin -->
+        <!-- 1c. Tampilan Login Admin -->
         <div id="admin-login-view" class="view hidden min-h-screen flex items-center justify-center">
              <div class="text-center bg-white p-8 md:p-12 rounded-2xl shadow-2xl max-w-md w-full mx-4 card-water">
                 <h2 class="text-2xl font-bold text-[#01579b] mb-6">Login Admin</h2>
@@ -153,7 +171,8 @@
                     <button data-tab="jadwal" class="tab-water active flex-1 p-4 text-center text-sm md:text-base border-r border-dashed border-[#01579b]">Janji Temu</button>
                     <button data-tab="chat" class="tab-water flex-1 p-4 text-center text-sm md:text-base border-r border-dashed border-[#01579b]">Chat Privat</button>
                     <button data-tab="materi" class="tab-water flex-1 p-4 text-center text-sm md:text-base border-r border-dashed border-[#01579b]">Materi</button>
-                    <button data-tab="transparansi" class="tab-water flex-1 p-4 text-center text-sm md:text-base">Transparansi OSIS</button>
+                    <!-- TAB BARU UNTUK LAPORAN SISWA -->
+                    <button data-tab="laporan-bk" class="tab-water flex-1 p-4 text-center text-sm md:text-base">Laporan BK</button>
                 </nav>
                 <div class="p-4 md:p-8">
                     <div id="jadwal-siswa" class="tab-content">
@@ -176,7 +195,7 @@
                     </div>
                     <div id="chat-siswa" class="tab-content hidden h-[60vh] flex flex-col">
                          <div class="p-4 bg-cyan-200 rounded-xl shadow-inner mb-4 text-center border-4 border-[#01579b]">
-                            <p class="text-sm text-slate-700 mb-2 font-bold">Butuh bantuan cepat? Hubungi admin via WhatsApp!</p>
+                            <p class="text-sm text-slate-700 mb-2 font-bold">Butuh bantuan cepat? Hubungi Guru BK via WhatsApp!</p>
                             <a href="https://wa.me/6281283322651" target="_blank" class="inline-flex items-center gap-2 bg-green-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-green-600 btn-water">
                                 <i data-lucide="message-square-text" class="w-5 h-5"></i>
                                 Chat sekarang!
@@ -194,29 +213,89 @@
                         <h3 class="font-bold text-2xl mb-4 text-cyan-600">Materi</h3>
                         <div id="materi-list" class="space-y-4 max-h-[60vh] overflow-y-auto pr-2"></div>
                     </div>
-                    <div id="transparansi-siswa" class="tab-content hidden">
-                        <h2 class="font-bold text-2xl text-blue-600 mb-4">Transparansi OSIS</h2>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                            <div>
-                                <h3 class="font-bold text-lg mb-4 text-cyan-600">Daftar Proposal Kegiatan</h3>
-                                <div id="proposal-list-siswa" class="space-y-4 max-h-[60vh] overflow-y-auto pr-2"></div>
-                            </div>
-                            <div>
-                                <h3 class="font-bold text-lg mb-4 text-teal-600">Laporan Keuangan</h3>
-                                <div class="bg-white p-4 rounded-lg shadow-md mb-4 flex justify-around border-4 border-[#01579b] [transform:rotate(2deg)]">
-                                    <div class="text-center"><p class="text-sm text-slate-500">Total Pemasukan</p><p id="total-pemasukan-siswa" class="text-lg font-bold text-green-600"></p></div>
-                                    <div class="text-center"><p class="text-sm text-slate-500">Total Pengeluaran</p><p id="total-pengeluaran-siswa" class="text-lg font-bold text-red-600"></p></div>
-                                    <div class="text-center"><p class="text-sm text-slate-500">Saldo Akhir</p><p id="saldo-akhir-siswa" class="text-lg font-bold text-blue-600"></p></div>
-                                </div>
-                                <div id="keuangan-list-siswa" class="space-y-4 max-h-[40vh] overflow-y-auto pr-2"></div>
-                            </div>
+                    <!-- KONTEN BARU UNTUK LAPORAN SISWA -->
+                    <div id="laporan-bk-siswa" class="tab-content hidden">
+                        <h3 class="font-bold text-2xl mb-4 text-cyan-600">Laporan Kegiatan BK</h3>
+                        <div id="laporan-bk-siswa-list" class="space-y-4 max-h-[60vh] overflow-y-auto pr-2">
+                            <!-- Reports will be rendered here -->
                         </div>
+                    </div>
+                    <!-- AKHIR KONTEN BARU -->
+                </div>
+            </main>
+        </div>
+
+        <!-- 3. Tampilan Dasbor Guru BK -->
+        <div id="guru-bk-view" class="view hidden">
+            <header class="flex justify-between items-center mb-8">
+                <div class="inline-flex items-center gap-3 bg-white p-3 rounded-full shadow-lg border-4 border-[#01579b] [transform:rotate(-3deg)]">
+                    <i data-lucide="user-check" class="w-10 h-10 text-teal-500"></i>
+                    <div>
+                        <h1 id="guru-bk-name-display" class="text-xl md:text-2xl font-bold text-teal-600">Dasbor Guru BK</h1>
+                        <p class="text-xs text-slate-500">Manajemen Konseling</p>
+                    </div>
+                </div>
+                <button class="logout-btn text-sm text-slate-600 hover:text-red-500 flex items-center gap-1">
+                    <i data-lucide="log-out" class="w-4 h-4"></i>
+                    Keluar
+                </button>
+            </header>
+            <main class="bg-white rounded-2xl shadow-2xl overflow-hidden card-water">
+                <nav class="flex border-b-4 border-[#01579b]">
+                    <button data-tab="jadwal" class="tab-water active flex-1 p-4 text-center text-sm md:text-base border-r border-dashed border-[#01579b]">Janji Temu</button>
+                    <!-- Perubahan 1: Mengganti nama tab untuk memperjelas fitur komunikasi/masukan siswa -->
+                    <button data-tab="chat" class="tab-water flex-1 p-4 text-center text-sm md:text-base border-r border-dashed border-[#01579b]">Komunikasi Siswa</button>
+                    <button data-tab="materi" class="tab-water flex-1 p-4 text-center text-sm md:text-base border-r border-dashed border-[#01579b]">Materi</button>
+                    <button data-tab="laporan-bk" class="tab-water flex-1 p-4 text-center text-sm md:text-base">Laporan</button>
+                </nav>
+                <div class="p-4 md:p-8">
+                    <div id="jadwal-guru-bk" class="tab-content">
+                        <h2 class="text-xl md:text-2xl font-bold text-teal-600 mb-6">Janji Temu Masuk</h2>
+                        <div id="guru-bk-appointment-list" class="space-y-4"></div>
+                    </div>
+                    <div id="chat-guru-bk" class="tab-content hidden h-[60vh] flex flex-col">
+                         <!-- Perubahan 2: Menambahkan judul yang lebih jelas untuk kotak masuk siswa -->
+                         <h3 class="font-bold text-2xl mb-4 text-teal-600">Kotak Masuk Siswa</h3>
+                         <div class="mb-4">
+                            <label for="chat-student-select-guru" class="block text-sm font-bold text-slate-700">Pilih Siswa:</label>
+                            <select id="chat-student-select-guru" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-2 border-[#01579b] focus:outline-none focus:ring-teal-500 sm:text-sm rounded-md"></select>
+                         </div>
+                        <div id="chat-messages-guru-bk" class="flex-grow overflow-y-auto p-4 space-y-4 rounded-xl bg-teal-50 shadow-inner mb-4 border-4 border-[#01579b]"></div>
+                        <div class="flex gap-2">
+                            <input type="text" id="chat-input-guru-bk" placeholder="Balas pesan siswa..." class="flex-grow border-2 rounded-full px-4 py-2 border-[#01579b] focus:outline-none focus:ring-2 focus:ring-teal-500">
+                            <button id="send-btn-guru-bk" class="bg-teal-400 text-[#01579b] rounded-full p-3 hover:bg-teal-500 btn-water">
+                                <i data-lucide="send" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div id="materi-guru-bk" class="tab-content hidden">
+                        <h3 class="font-bold text-2xl mb-4 text-cyan-600">Kelola Materi</h3>
+                        <form id="materi-form-guru-bk" class="bg-cyan-50 p-6 rounded-lg border-4 border-[#01579b] space-y-4">
+                            <div><label for="materi-judul-guru-bk" class="block text-sm">Judul</label><input type="text" id="materi-judul-guru-bk" class="mt-1 block w-full px-3 py-2 border-2 rounded-md border-[#01579b]" required></div>
+                            <div><label for="materi-konten-guru-bk" class="block text-sm">Konten</label><textarea id="materi-konten-guru-bk" rows="5" class="mt-1 block w-full px-3 py-2 border-2 rounded-md border-[#01579b]" required></textarea></div>
+                            <button type="submit" class="w-full bg-cyan-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-cyan-600 btn-water">Simpan Materi</button>
+                        </form>
+                        <hr class="my-8 border-t-2 border-[#01579b] border-dashed">
+                        <h3 class="font-bold text-lg mb-4 text-slate-700">Daftar Materi</h3>
+                        <div id="materi-list-guru-bk" class="space-y-4 max-h-[40vh] overflow-y-auto pr-2"></div>
+                    </div>
+                    <div id="laporan-bk-guru-bk" class="tab-content hidden">
+                        <h3 class="font-bold text-lg mb-4 text-teal-600">Laporan Kegiatan Guru BK</h3>
+                        <form id="laporan-bk-form-guru-bk" class="bg-teal-50 p-6 rounded-lg border-4 border-[#01579b] space-y-4">
+                            <div><label for="laporan-bk-kegiatan-guru-bk" class="block text-sm">Nama Kegiatan/Layanan</label><input type="text" id="laporan-bk-kegiatan-guru-bk" class="mt-1 block w-full px-3 py-2 border-2 rounded-md border-[#01579b]" required></div>
+                            <div><label for="laporan-bk-deskripsi-guru-bk" class="block text-sm">Deskripsi Singkat</label><textarea id="laporan-bk-deskripsi-guru-bk" rows="3" class="mt-1 block w-full px-3 py-2 border-2 rounded-md border-[#01579b]" required></textarea></div>
+                            <div><label for="laporan-bk-tanggal-guru-bk" class="block text-sm">Tanggal Pelaksanaan</label><input type="date" id="laporan-bk-tanggal-guru-bk" class="mt-1 block w-full px-3 py-2 border-2 rounded-md border-[#01579b]" required></div>
+                            <button type="submit" class="w-full bg-teal-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-teal-600 btn-water">Simpan Laporan</button>
+                        </form>
+                        <hr class="my-8 border-t-2 border-[#01579b] border-dashed">
+                        <h3 class="font-bold text-lg mb-4 text-slate-700">Riwayat Laporan</h3>
+                        <div id="laporan-bk-list-guru-bk" class="space-y-4 max-h-[40vh] overflow-y-auto pr-2"></div>
                     </div>
                 </div>
             </main>
         </div>
 
-        <!-- 3. Tampilan Dasbor Admin -->
+        <!-- 4. Tampilan Dasbor Admin -->
         <div id="admin-view" class="view hidden">
             <header class="flex justify-between items-center mb-8">
                 <div class="inline-flex items-center gap-3 bg-white p-3 rounded-full shadow-lg border-4 border-[#01579b] [transform:rotate(-3deg)]">
@@ -233,96 +312,26 @@
             </header>
             <main class="bg-white rounded-2xl shadow-2xl overflow-hidden card-water">
                 <nav class="flex border-b-4 border-[#01579b]">
-                    <button data-tab="jadwal" class="tab-water active flex-1 p-4 text-center text-sm md:text-base border-r border-dashed border-[#01579b]">Janji Temu</button>
-                    <button data-tab="chat" class="tab-water flex-1 p-4 text-center text-sm md:text-base border-r border-dashed border-[#01579b]">Chat Privat</button>
-                    <button data-tab="materi" class="tab-water flex-1 p-4 text-center text-sm md:text-base border-r border-dashed border-[#01579b]">Materi</button>
-                    <button data-tab="proposal" class="tab-water flex-1 p-4 text-center text-sm md:text-base border-r border-dashed border-[#01579b]">Proposal OSIS</button>
-                    <button data-tab="keuangan" class="tab-water flex-1 p-4 text-center text-sm md:text-base border-r border-dashed border-[#01579b]">Laporan Keuangan</button>
-                    <button data-tab="users" class="tab-water flex-1 p-4 text-center text-sm md:text-base">Kelola User</button>
+                    <button data-tab="users" class="tab-water active flex-1 p-4 text-center text-sm md:text-base">Kelola User</button>
                 </nav>
                 <div class="p-4 md:p-8">
-                    <!-- Tab Janji Temu -->
-                    <div id="jadwal-admin" class="tab-content">
-                        <div class="flex justify-between items-center mb-6">
-                            <h2 class="text-xl md:text-2xl font-bold text-blue-600">Janji Temu Masuk</h2>
-                            <button id="refresh-btn" class="text-slate-500 hover:text-blue-600"><i data-lucide="refresh-cw" class="w-5 h-5"></i></button>
-                        </div>
-                        <div id="admin-appointment-list" class="space-y-4"></div>
-                    </div>
-                    <!-- Tab Chat Privat -->
-                    <div id="chat-admin" class="tab-content hidden h-[60vh] flex flex-col">
-                         <div id="student-list-chat" class="mb-4">
-                            <label for="chat-student-select" class="block text-sm font-bold text-slate-700">Pilih Siswa:</label>
-                            <select id="chat-student-select" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-2 border-[#01579b] focus:outline-none focus:ring-blue-500 sm:text-sm rounded-md"></select>
-                         </div>
-                        <div id="chat-messages-admin" class="flex-grow overflow-y-auto p-4 space-y-4 rounded-xl bg-blue-100 shadow-inner mb-4 border-4 border-[#01579b]"></div>
-                        <div class="flex gap-2">
-                            <input type="text" id="chat-input-admin" placeholder="Balas pesan siswa..." class="flex-grow border-2 rounded-full px-4 py-2 border-[#01579b] focus:outline-none focus:ring-2 focus:ring-cyan-500">
-                            <button id="send-btn-admin" class="bg-cyan-400 text-[#01579b] rounded-full p-3 hover:bg-cyan-500 btn-water">
-                                <i data-lucide="send" class="w-5 h-5"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <!-- Tab Materi Motivasi -->
-                    <div id="materi-admin" class="tab-content hidden">
-                        <h3 class="font-bold text-2xl mb-4 text-cyan-600">Kelola Materi</h3>
-                        <form id="materi-form" class="bg-cyan-50 p-6 rounded-lg border-4 border-[#01579b] space-y-4">
-                            <div><label for="materi-judul" class="block text-sm">Judul</label><input type="text" id="materi-judul" class="mt-1 block w-full px-3 py-2 border-2 rounded-md border-[#01579b]" required></div>
-                            <div><label for="materi-konten" class="block text-sm">Konten</label><textarea id="materi-konten" rows="5" class="mt-1 block w-full px-3 py-2 border-2 rounded-md border-[#01579b]" required></textarea></div>
-                            <button type="submit" class="w-full bg-cyan-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-cyan-600 btn-water">Simpan Materi</button>
-                        </form>
-                        <hr class="my-8 border-t-2 border-[#01579b] border-dashed">
-                        <h3 class="font-bold text-lg mb-4 text-slate-700">Daftar Materi</h3>
-                        <div id="materi-list-admin" class="space-y-4 max-h-[40vh] overflow-y-auto pr-2"></div>
-                    </div>
-                    <!-- Tab Proposal OSIS -->
-                    <div id="proposal-admin" class="tab-content hidden">
-                        <h3 class="font-bold text-lg mb-4 text-blue-600">Kelola Proposal Kegiatan</h3>
-                        <form id="proposal-form" class="bg-blue-50 p-6 rounded-lg border-4 border-[#01579b] space-y-4">
-                            <div><label for="proposal-nama-kegiatan" class="block text-sm">Nama Kegiatan</label><input type="text" id="proposal-nama-kegiatan" class="mt-1 block w-full px-3 py-2 border-2 rounded-md border-[#01579b]" required></div>
-                            <div><label for="proposal-deskripsi" class="block text-sm">Deskripsi</label><textarea id="proposal-deskripsi" rows="5" class="mt-1 block w-full px-3 py-2 border-2 rounded-md border-[#01579b]" required></textarea></div>
-                            <div><label for="proposal-anggaran" class="block text-sm">Anggaran Dana</label><input type="number" id="proposal-anggaran" class="mt-1 block w-full px-3 py-2 border-2 rounded-md border-[#01579b]" required></div>
-                            <button type="submit" class="w-full bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-600 btn-water">Simpan Proposal</button>
-                        </form>
-                        <hr class="my-8 border-t-2 border-[#01579b] border-dashed">
-                        <h3 class="font-bold text-lg mb-4 text-slate-700">Daftar Proposal</h3>
-                        <div id="proposal-list-admin" class="space-y-4 max-h-[40vh] overflow-y-auto pr-2"></div>
-                    </div>
-                    <!-- Tab Laporan Keuangan -->
-                    <div id="keuangan-admin" class="tab-content hidden">
-                        <h3 class="font-bold text-lg mb-4 text-teal-600">Laporan Keuangan OSIS</h3>
-                        <form id="keuangan-form" class="bg-teal-50 p-6 rounded-lg border-4 border-[#01579b] space-y-4">
-                            <div><label for="keuangan-deskripsi" class="block text-sm">Deskripsi Transaksi</label><input type="text" id="keuangan-deskripsi" class="mt-1 block w-full px-3 py-2 border-2 rounded-md border-[#01579b]" required></div>
+                    <!-- Tab Kelola User -->
+                    <div id="users-admin" class="tab-content">
+                        <h3 class="font-bold text-2xl mb-4 text-purple-600">Manajemen User</h3>
+                         <form id="create-user-form" class="bg-purple-50 p-6 rounded-lg border-4 border-[#01579b] space-y-4 mb-8">
                             <div>
-                                <label class="block text-sm">Jenis Transaksi</label>
-                                <select id="keuangan-jenis" class="mt-1 block w-full px-3 py-2 border-2 rounded-md border-[#01579b]">
-                                    <option value="pemasukan">Pemasukan</option>
-                                    <option value="pengeluaran">Pengeluaran</option>
+                                <label for="user-role" class="block text-sm">Peran User</label>
+                                <select id="user-role" class="mt-1 block w-full px-3 py-2 border-2 rounded-md border-[#01579b]">
+                                    <option value="siswa">Siswa</option>
+                                    <option value="guru-bk">Guru BK</option>
                                 </select>
                             </div>
-                            <div><label for="keuangan-jumlah" class="block text-sm">Jumlah</label><input type="number" id="keuangan-jumlah" class="mt-1 block w-full px-3 py-2 border-2 rounded-md border-[#01579b]" required></div>
-                            <button type="submit" class="w-full bg-teal-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-teal-600 btn-water">Simpan Transaksi</button>
-                        </form>
-                        <hr class="my-8 border-t-2 border-[#01579b] border-dashed">
-                        <h3 class="font-bold text-lg mb-4 text-slate-700">Ringkasan Keuangan</h3>
-                        <div class="bg-white p-4 rounded-lg shadow-md mb-4 flex justify-around border-4 border-[#01579b] [transform:rotate(-2deg)]">
-                            <div class="text-center"><p class="text-sm text-slate-500">Total Pemasukan</p><p id="total-pemasukan-admin" class="text-lg font-bold text-green-600"></p></div>
-                            <div class="text-center"><p class="text-sm text-slate-500">Total Pengeluaran</p><p id="total-pengeluaran-admin" class="text-lg font-bold text-red-600"></p></div>
-                            <div class="text-center"><p class="text-sm text-slate-500">Saldo Akhir</p><p id="saldo-akhir-admin" class="text-lg font-bold text-blue-600"></p></div>
-                        </div>
-                        <h3 class="font-bold text-lg mb-4 text-slate-700">Riwayat Transaksi</h3>
-                        <div id="keuangan-list-admin" class="space-y-4 max-h-[40vh] overflow-y-auto pr-2"></div>
-                    </div>
-                    <!-- Tab Kelola User -->
-                    <div id="users-admin" class="tab-content hidden">
-                        <h3 class="font-bold text-2xl mb-4 text-purple-600">Manajemen User Siswa</h3>
-                         <form id="create-user-form" class="bg-purple-50 p-6 rounded-lg border-4 border-[#01579b] space-y-4 mb-8">
-                            <div><label for="user-nama" class="block text-sm">Nama Lengkap Siswa</label><input type="text" id="user-nama" class="mt-1 block w-full px-3 py-2 border-2 rounded-md border-[#01579b]" required></div>
+                            <div><label for="user-nama" class="block text-sm">Nama Lengkap</label><input type="text" id="user-nama" class="mt-1 block w-full px-3 py-2 border-2 rounded-md border-[#01579b]" required></div>
                             <div><label for="user-username" class="block text-sm">Username</label><input type="text" id="user-username" class="mt-1 block w-full px-3 py-2 border-2 rounded-md border-[#01579b]" required></div>
                             <div><label for="user-password" class="block text-sm">Password</label><input type="password" id="user-password" class="mt-1 block w-full px-3 py-2 border-2 rounded-md border-[#01579b]" required></div>
-                            <button type="submit" class="w-full bg-purple-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-purple-600 btn-water">Buat Akun Siswa</button>
+                            <button type="submit" class="w-full bg-purple-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-purple-600 btn-water">Buat Akun</button>
                         </form>
-                        <p class="text-sm text-slate-500 mb-6">Di sini Anda dapat melihat dan menghapus data siswa. Menghapus user akan menghapus semua data terkait, termasuk janji temu dan riwayat chat.</p>
+                        <p class="text-sm text-slate-500 mb-6">Di sini Anda dapat melihat dan menghapus data user. Menghapus user akan menghapus semua data terkait (janji temu, chat, dll).</p>
                         <div id="user-list-admin" class="space-y-4 max-h-[60vh] overflow-y-auto pr-2"></div>
                     </div>
                 </div>
@@ -337,58 +346,51 @@
             // === Elemen Tampilan ===
             const roleSelectionView = document.getElementById('role-selection-view');
             const studentLoginView = document.getElementById('student-login-view');
+            const guruBkLoginView = document.getElementById('guru-bk-login-view');
             const adminLoginView = document.getElementById('admin-login-view');
             const siswaView = document.getElementById('siswa-view');
+            const guruBkView = document.getElementById('guru-bk-view');
             const adminView = document.getElementById('admin-view');
 
-            const studentLoginForm = document.getElementById('student-login-form');
-            const studentUsernameInput = document.getElementById('student-username-input');
-            const studentPasswordInput = document.getElementById('student-password-input');
-            const studentLoginError = document.getElementById('student-login-error');
-            
-            const adminLoginForm = document.getElementById('admin-login-form');
-            const adminPasswordInput = document.getElementById('admin-password-input');
-            const adminLoginError = document.getElementById('admin-login-error');
-
+            // === Tombol Navigasi & Form Login ===
             const showLoginSiswaBtn = document.getElementById('show-login-siswa-btn');
+            const showLoginGuruBkBtn = document.getElementById('show-login-guru-bk-btn');
             const showLoginAdminBtn = document.getElementById('show-login-admin-btn');
-            const backToRoleBtns = document.querySelectorAll('#back-to-role-selection-btn, #back-to-role-selection-btn2');
+            const backToRoleBtns = document.querySelectorAll('#back-to-role-selection-btn, #back-to-role-selection-btn2, #back-to-role-selection-btn-guru');
             const logoutBtns = document.querySelectorAll('.logout-btn');
 
-            const siswaTabs = siswaView.querySelectorAll('.tab-water');
-            const siswaTabContents = siswaView.querySelectorAll('.tab-content');
-            const adminTabs = adminView.querySelectorAll('.tab-water');
-            const adminTabContents = adminView.querySelectorAll('.tab-content');
-
+            const studentLoginForm = document.getElementById('student-login-form');
+            const guruBkLoginForm = document.getElementById('guru-bk-login-form');
+            const adminLoginForm = document.getElementById('admin-login-form');
+            
             // === Fungsi Pengalih Tampilan ===
             const showView = (viewToShow) => {
-                [roleSelectionView, studentLoginView, adminLoginView, siswaView, adminView].forEach(v => v.classList.add('hidden'));
+                // Ensure all views are hidden initially
+                [roleSelectionView, studentLoginView, guruBkLoginView, adminLoginView, siswaView, guruBkView, adminView].forEach(v => v.classList.add('hidden'));
+                // Show the target view
                 viewToShow.classList.remove('hidden');
             };
 
-            const switchTab = (tabs, contents, targetTabId) => {
+            const switchTab = (view, targetTabId) => {
+                const tabs = view.querySelectorAll('.tab-water');
+                const contents = view.querySelectorAll('.tab-content');
+
                 tabs.forEach(t => t.classList.remove('active'));
                 const targetTab = Array.from(tabs).find(t => t.getAttribute('data-tab') === targetTabId);
-                if (targetTab) {
-                    targetTab.classList.add('active');
-                }
+                if (targetTab) targetTab.classList.add('active');
+                
+                // Get the base ID (e.g., 'siswa' from 'siswa-view')
+                const baseId = view.id.split('-')[0];
+
                 contents.forEach(c => c.classList.add('hidden'));
-                const targetContentId = targetTabId + (tabs === siswaTabs ? '-siswa' : '-admin');
-                const targetContentElement = document.getElementById(targetContentId);
-                if (targetContentElement) {
-                    targetContentElement.classList.remove('hidden');
-                }
+                const targetContent = view.querySelector(`#${targetTabId}-${baseId}`);
+                if(targetContent) targetContent.classList.remove('hidden');
             };
 
             // === Fungsi Bersama (Shared Functions) ===
-            const getStudentData = (id) => {
-                const accounts = JSON.parse(localStorage.getItem('studentAccounts') || '[]');
+            const getUserData = (id) => {
+                const accounts = JSON.parse(localStorage.getItem('userAccounts') || '[]');
                 return accounts.find(acc => acc.id === id);
-            };
-            
-            const getStudentName = (id) => {
-                const studentData = getStudentData(id);
-                return studentData ? studentData.name : id;
             };
 
             const getStatusBadge = (status) => {
@@ -398,11 +400,22 @@
                     default: return '<span class="text-xs font-bold bg-blue-200 text-blue-800 px-2 py-1 rounded-full border border-blue-800">Menunggu</span>';
                 }
             };
-
-            const renderChatMessage = (message, sender) => {
+            
+            const renderChatMessage = (message, sender, role) => {
                 const isUser = sender === 'user';
-                const messageClass = isUser ? 'bg-blue-400 text-[#01579b] ml-auto' : 'bg-white text-[#01579b]';
-                const alignmentClass = isUser ? 'justify-end' : 'justify-start';
+                let messageClass, alignmentClass;
+
+                if (role === 'siswa') {
+                    // Siswa's outgoing messages are blue/cyan, incoming (from Guru) are white/default
+                    messageClass = isUser ? 'bg-blue-400 text-[#01579b] ml-auto' : 'bg-white text-[#01579b]';
+                    alignmentClass = isUser ? 'justify-end' : 'justify-start';
+                } else { // guru-bk
+                    // Guru BK's outgoing messages are teal/default, incoming (from Siswa) are white/default
+                    // NOTE: In Guru BK view, 'user' refers to the GURU BK (the local user). 'other' refers to the STUDENT.
+                    messageClass = isUser ? 'bg-teal-400 text-[#01579b] ml-auto' : 'bg-white text-[#01579b]';
+                    alignmentClass = isUser ? 'justify-end' : 'justify-start';
+                }
+
                 return `
                     <div class="flex ${alignmentClass}">
                         <div class="max-w-xs md:max-w-sm rounded-xl p-3 shadow-md border-2 border-[#01579b] ${messageClass}">
@@ -411,55 +424,41 @@
                     </div>
                 `;
             };
+            
+            // Set up default accounts if none exist
+            if (!localStorage.getItem('userAccounts')) {
+                const defaultAccounts = [
+                    { id: 'siswa-001', role: 'siswa', name: 'Budi Santoso', username: 'budi', password: '123' },
+                    { id: 'siswa-002', role: 'siswa', name: 'Citra Dewi', username: 'citra', password: '123' },
+                    { id: 'guru-bk-001', role: 'guru-bk', name: 'Ibu Rina', username: 'rina', password: '123' },
+                ];
+                localStorage.setItem('userAccounts', JSON.stringify(defaultAccounts));
+            }
 
-            // === Format Rupiah ===
-            const formatRupiah = (number) => {
-                return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(number);
-            };
 
             // =============================
             // === LOGIKA UNTUK SISWA ======
             // =============================
-            const studentIdDisplay = document.getElementById('student-id-display');
-            const studentNameDisplay = document.getElementById('student-name-display');
-            const appointmentForm = document.getElementById('appointment-form');
-            const appointmentList = document.getElementById('appointment-list');
-            const successMessage = document.getElementById('success-message');
-            const chatMessagesSiswa = document.getElementById('chat-messages-siswa');
-            const chatInputSiswa = document.getElementById('chat-input-siswa');
-            const sendBtnSiswa = document.getElementById('send-btn-siswa');
-            const materiListSiswa = document.getElementById('materi-list');
-            const proposalListSiswa = document.getElementById('proposal-list-siswa');
-            const keuanganListSiswa = document.getElementById('keuangan-list-siswa');
-            const totalPemasukanSiswaEl = document.getElementById('total-pemasukan-siswa');
-            const totalPengeluaranSiswaEl = document.getElementById('total-pengeluaran-siswa');
-            const saldoAkhirSiswaEl = document.getElementById('saldo-akhir-siswa');
-
             let studentId;
-
+            const studentNameDisplay = document.getElementById('student-name-display');
+            const studentIdDisplay = document.getElementById('student-id-display');
+            
             function initSiswaView() {
-                studentId = localStorage.getItem('studentId');
-                if (!studentId) {
-                    // Jika tidak ada studentId, kembali ke halaman login
-                    showView(roleSelectionView);
-                    return;
-                }
-                const studentData = getStudentData(studentId);
-                const studentName = studentData ? studentData.name : 'Siswa';
-                
-                studentNameDisplay.textContent = `Selamat Datang, ${studentName}`;
+                studentId = localStorage.getItem('currentUserId');
+                if (!studentId) { showView(roleSelectionView); return; }
+                const userData = getUserData(studentId);
+                studentNameDisplay.textContent = `Selamat Datang, ${userData ? userData.name : 'Siswa'}`;
                 studentIdDisplay.textContent = `ID Sesi: ${studentId}`;
                 renderStudentAppointments();
-                renderSiswaChat();
                 renderMateriListSiswa();
-                renderProposalListSiswa();
-                renderKeuanganListSiswa();
+                renderStudentLaporanList(); // <--- PANGGIL FUNGSI LAPORAN UNTUK SISWA
                 showView(siswaView);
             }
-
+            
             const renderStudentAppointments = () => {
                 const allAppointments = JSON.parse(localStorage.getItem('appointments') || '[]');
                 const myAppointments = allAppointments.filter(app => app.studentId === studentId).sort((a,b) => new Date(b.date) - new Date(a.date));
+                const appointmentList = document.getElementById('appointment-list');
                 appointmentList.innerHTML = '';
                 if (myAppointments.length === 0) {
                     appointmentList.innerHTML = '<p class="text-slate-500 text-center">Belum ada janji temu.</p>';
@@ -482,15 +481,18 @@
             const renderSiswaChat = () => {
                 const allChats = JSON.parse(localStorage.getItem('chats') || '{}');
                 const myChat = allChats[studentId] || [];
+                const chatMessagesSiswa = document.getElementById('chat-messages-siswa');
                 chatMessagesSiswa.innerHTML = '';
+                // Ensure chat is displayed based on sender: 'user' is Siswa, 'guru' is Guru BK
                 myChat.forEach(chat => {
-                    chatMessagesSiswa.innerHTML += renderChatMessage(chat.message, chat.sender);
+                    chatMessagesSiswa.innerHTML += renderChatMessage(chat.message, chat.sender === 'user' ? 'user' : 'other', 'siswa');
                 });
                 chatMessagesSiswa.scrollTop = chatMessagesSiswa.scrollHeight;
             };
 
             const renderMateriListSiswa = () => {
                 const materiList = JSON.parse(localStorage.getItem('materi') || '[]');
+                const materiListSiswa = document.getElementById('materi-list');
                 materiListSiswa.innerHTML = '';
                 if (materiList.length === 0) {
                     materiListSiswa.innerHTML = '<p class="text-center text-slate-500">Belum ada materi yang ditambahkan.</p>';
@@ -507,162 +509,107 @@
                 });
             };
             
-            const renderProposalListSiswa = () => {
-                const proposals = JSON.parse(localStorage.getItem('proposals') || '[]');
-                proposalListSiswa.innerHTML = '';
-                if (proposals.length === 0) {
-                    proposalListSiswa.innerHTML = '<p class="text-center text-slate-500">Tidak ada proposal yang tersimpan.</p>';
+            // FUNGSI BARU UNTUK LAPORAN SISWA
+            const renderStudentLaporanList = () => {
+                const laporanBk = JSON.parse(localStorage.getItem('laporanBk') || '[]').sort((a,b) => new Date(b.tanggal) - new Date(a.tanggal));
+                const listEl = document.getElementById('laporan-bk-siswa-list');
+                listEl.innerHTML = '';
+                if (laporanBk.length === 0) {
+                    listEl.innerHTML = '<p class="text-center text-slate-500">Belum ada laporan kegiatan BK yang dibagikan.</p>';
                     return;
                 }
-                proposals.forEach(prop => {
+                laporanBk.forEach(laporan => {
+                    const tanggal = new Date(laporan.tanggal).toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' });
                     const el = document.createElement('div');
-                    el.className = 'p-4 bg-white rounded-lg shadow-md border-2 border-blue-600';
+                    el.className = 'p-4 bg-blue-50 rounded-lg shadow-md border-2 border-cyan-600 [transform:rotate(1deg)]';
                     el.innerHTML = `
-                        <h4 class="font-bold text-lg text-blue-600">${prop.namaKegiatan}</h4>
-                        <p class="text-sm text-slate-500">Anggaran: ${formatRupiah(prop.anggaran)}</p>
-                        <p class="text-xs text-slate-700 mt-2">${prop.deskripsi}</p>
+                        <h4 class="font-bold text-lg text-teal-600 mb-1">${laporan.kegiatan}</h4>
+                        <p class="text-xs text-slate-500 mb-2">Tanggal: ${tanggal}</p>
+                        <p class="text-sm text-slate-700 leading-relaxed">${laporan.deskripsi}</p>
                     `;
-                    proposalListSiswa.appendChild(el);
+                    listEl.appendChild(el);
                 });
             };
-
-            const renderKeuanganListSiswa = () => {
-                const keuangan = JSON.parse(localStorage.getItem('keuangan') || '[]');
-                keuanganListSiswa.innerHTML = '';
-                let totalPemasukan = 0;
-                let totalPengeluaran = 0;
-
-                if (keuangan.length === 0) {
-                    keuanganListSiswa.innerHTML = '<p class="text-center text-slate-500">Tidak ada data keuangan yang tersimpan.</p>';
-                } else {
-                    keuangan.forEach(transaksi => {
-                        const el = document.createElement('div');
-                        const isPemasukan = transaksi.jenis === 'pemasukan';
-                        const bgColor = isPemasukan ? 'bg-green-100' : 'bg-red-100';
-                        const textColor = isPemasukan ? 'text-green-600' : 'text-red-600';
-                        
-                        if (isPemasukan) {
-                            totalPemasukan += parseInt(transaksi.jumlah);
-                        } else {
-                            totalPengeluaran += parseInt(transaksi.jumlah);
-                        }
-                        
-                        el.className = `p-4 ${bgColor} rounded-lg shadow-sm flex justify-between items-center border-2 border-[#01579b]`;
-                        el.innerHTML = `
-                            <div>
-                                <h4 class="font-bold text-base ${textColor}">${isPemasukan ? '+' : '-'} ${formatRupiah(transaksi.jumlah)}</h4>
-                                <p class="text-sm text-slate-700">${transaksi.deskripsi}</p>
-                            </div>
-                        `;
-                        keuanganListSiswa.appendChild(el);
-                    });
-                }
-                
-                totalPemasukanSiswaEl.textContent = formatRupiah(totalPemasukan);
-                totalPengeluaranSiswaEl.textContent = formatRupiah(totalPengeluaran);
-                saldoAkhirSiswaEl.textContent = formatRupiah(totalPemasukan - totalPengeluaran);
-            };
-
-            appointmentForm.addEventListener('submit', (e) => {
+            
+            document.getElementById('appointment-form').addEventListener('submit', (e) => {
                 e.preventDefault();
                 const allAppointments = JSON.parse(localStorage.getItem('appointments') || '[]');
-                const studentData = getStudentData(studentId);
+                const userData = getUserData(studentId);
                 const newAppointment = {
                     id: 'app-' + Date.now(), studentId, status: 'Menunggu',
-                    name: studentData.name, // Ambil nama dari data akun
+                    name: userData ? userData.name : 'Unknown',
                     class: document.getElementById('kelas').value,
                     topic: document.getElementById('topik').value,
                     date: document.getElementById('tanggal').value,
                 };
                 allAppointments.push(newAppointment);
                 localStorage.setItem('appointments', JSON.stringify(allAppointments));
-
-                appointmentForm.reset();
+                e.target.reset();
+                const successMessage = document.getElementById('success-message');
                 successMessage.classList.remove('hidden');
                 setTimeout(() => successMessage.classList.add('hidden'), 3000);
                 renderStudentAppointments();
             });
 
-            sendBtnSiswa.addEventListener('click', () => {
+            document.getElementById('send-btn-siswa').addEventListener('click', () => {
+                const chatInputSiswa = document.getElementById('chat-input-siswa');
                 const message = chatInputSiswa.value.trim();
                 if (message) {
                     let allChats = JSON.parse(localStorage.getItem('chats') || '{}');
-                    if (!allChats[studentId]) {
-                        allChats[studentId] = [];
-                    }
+                    if (!allChats[studentId]) allChats[studentId] = [];
+                    // Sender 'user' means the local user (Siswa)
                     allChats[studentId].push({ message, sender: 'user', timestamp: Date.now() });
                     localStorage.setItem('chats', JSON.stringify(allChats));
                     chatInputSiswa.value = '';
                     renderSiswaChat();
                 }
             });
-
-            chatInputSiswa.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    sendBtnSiswa.click();
+            document.getElementById('chat-input-siswa').addEventListener('keypress', (e) => {
+                 if (e.key === 'Enter') {
+                    document.getElementById('send-btn-siswa').click();
                 }
             });
 
-            siswaTabs.forEach(tab => {
-                tab.addEventListener('click', () => {
-                    switchTab(siswaTabs, siswaTabContents, tab.getAttribute('data-tab'));
-                    if (tab.getAttribute('data-tab') === 'chat') renderSiswaChat();
-                    if (tab.getAttribute('data-tab') === 'materi') renderMateriListSiswa();
-                    if (tab.getAttribute('data-tab') === 'transparansi') {
-                        renderProposalListSiswa();
-                        renderKeuanganListSiswa();
-                    }
-                });
-            });
+            siswaView.querySelector('.tab-water[data-tab="jadwal"]').addEventListener('click', () => switchTab(siswaView, 'jadwal'));
+            siswaView.querySelector('.tab-water[data-tab="chat"]').addEventListener('click', () => { switchTab(siswaView, 'chat'); renderSiswaChat(); });
+            siswaView.querySelector('.tab-water[data-tab="materi"]').addEventListener('click', () => { switchTab(siswaView, 'materi'); renderMateriListSiswa(); });
+            // LISTENER BARU UNTUK LAPORAN SISWA
+            siswaView.querySelector('.tab-water[data-tab="laporan-bk"]').addEventListener('click', () => { switchTab(siswaView, 'laporan-bk'); renderStudentLaporanList(); });
+
 
             // =============================
-            // === LOGIKA UNTUK ADMIN ======
+            // === LOGIKA UNTUK GURU BK ====
             // =============================
-            const adminList = document.getElementById('admin-appointment-list');
-            const refreshBtn = document.getElementById('refresh-btn');
-            const chatStudentSelect = document.getElementById('chat-student-select');
-            const chatMessagesAdmin = document.getElementById('chat-messages-admin');
-            const chatInputAdmin = document.getElementById('chat-input-admin');
-            const sendBtnAdmin = document.getElementById('send-btn-admin');
-            const materiForm = document.getElementById('materi-form');
-            const materiListAdmin = document.getElementById('materi-list-admin');
-            const proposalForm = document.getElementById('proposal-form');
-            const proposalListAdmin = document.getElementById('proposal-list-admin');
-            const keuanganForm = document.getElementById('keuangan-form');
-            const totalPemasukanAdminEl = document.getElementById('total-pemasukan-admin');
-            const totalPengeluaranAdminEl = document.getElementById('total-pengeluaran-admin');
-            const saldoAkhirAdminEl = document.getElementById('saldo-akhir-admin');
-            const keuanganListAdmin = document.getElementById('keuangan-list-admin');
-            const createUserForm = document.getElementById('create-user-form');
-            const userListAdmin = document.getElementById('user-list-admin');
-
-            let selectedStudentId = null;
-            const adminPassword = 'admin123'; // Password admin
-
-            function initAdminView() {
-                renderAdminAppointments();
-                renderAdminChatUsers();
-                renderMateriListAdmin();
-                renderProposalListAdmin();
-                renderKeuanganListAdmin();
-                renderUserListAdmin();
-                showView(adminView);
+            let guruBkId;
+            let selectedStudentIdForGuru = null;
+            
+            function initGuruBkView() {
+                guruBkId = localStorage.getItem('currentUserId');
+                if (!guruBkId) { showView(roleSelectionView); return; }
+                const userData = getUserData(guruBkId);
+                document.getElementById('guru-bk-name-display').textContent = `Dasbor Guru: ${userData ? userData.name : 'Guru BK'}`;
+                renderGuruBkAppointments();
+                renderGuruBkChatUsers();
+                renderGuruBkMateriList();
+                renderGuruBkLaporanList();
+                showView(guruBkView);
             }
             
-            const renderAdminAppointments = () => {
+            const renderGuruBkAppointments = () => {
                 const allAppointments = JSON.parse(localStorage.getItem('appointments') || '[]').sort((a,b) => new Date(b.date) - new Date(a.date));
-                adminList.innerHTML = '';
+                const listEl = document.getElementById('guru-bk-appointment-list');
+                listEl.innerHTML = '';
                 if (allAppointments.length === 0) {
-                    adminList.innerHTML = '<p class="text-slate-500 text-center py-8">Tidak ada janji temu yang masuk.</p>';
+                    listEl.innerHTML = '<p class="text-slate-500 text-center py-8">Tidak ada janji temu yang masuk.</p>';
                     return;
                 }
                 allAppointments.forEach(app => {
                     const date = new Date(app.date);
                     const el = document.createElement('div');
-                    el.className = 'bg-blue-50 border-4 border-[#01579b] p-4 rounded-lg grid grid-cols-1 md:grid-cols-4 gap-4 items-center [transform:rotate(2deg)]';
+                    el.className = 'bg-teal-50 border-4 border-[#01579b] p-4 rounded-lg grid grid-cols-1 md:grid-cols-4 gap-4 items-center [transform:rotate(1deg)]';
                     el.innerHTML = `
                         <div class="md:col-span-2">
-                            <p class="font-bold text-blue-600">${app.name} <span class="font-normal text-slate-500">- ${app.class}</span></p>
+                            <p class="font-bold text-teal-600">${app.name} <span class="font-normal text-slate-500">- ${app.class}</span></p>
                             <p class="text-sm text-cyan-600 font-bold">${app.topic}</p>
                         </div>
                         <div><p class="font-bold">${date.toLocaleDateString('id-ID', {day: 'numeric', month: 'long'})}, ${date.toLocaleTimeString('id-ID', {hour:'2-digit', minute:'2-digit'})}</p>${getStatusBadge(app.status)}</div>
@@ -672,57 +619,66 @@
                             <button data-id="${app.id}" data-action="reject" class="action-btn bg-red-500 text-white px-3 py-1 rounded-md text-sm hover:bg-red-600 btn-water">Tolak</button>
                             ` : `<p class="text-sm text-slate-500">Telah direspon</p>`}
                         </div>`;
-                    adminList.appendChild(el);
+                    listEl.appendChild(el);
+                    lucide.createIcons(); // Re-render icons after adding new elements
                 });
             };
 
-            const renderAdminChatUsers = () => {
-                const studentAccounts = JSON.parse(localStorage.getItem('studentAccounts') || '[]');
-                chatStudentSelect.innerHTML = '<option value="">Pilih Siswa...</option>';
-                studentAccounts.forEach(acc => {
+            const renderGuruBkChatUsers = () => {
+                const allUsers = JSON.parse(localStorage.getItem('userAccounts') || '[]');
+                const students = allUsers.filter(u => u.role === 'siswa');
+                const selectEl = document.getElementById('chat-student-select-guru');
+                selectEl.innerHTML = '<option value="">Pilih Siswa...</option>';
+                students.forEach(acc => {
                     const option = document.createElement('option');
                     option.value = acc.id;
                     option.textContent = acc.name;
-                    chatStudentSelect.appendChild(option);
+                    selectEl.appendChild(option);
                 });
-
-                if (studentAccounts.length > 0) {
-                    const currentSelection = chatStudentSelect.value;
-                    if (!studentAccounts.find(s => s.id === currentSelection)) {
-                        selectedStudentId = studentAccounts[0].id;
-                        chatStudentSelect.value = selectedStudentId;
+                // Set default selected student if available
+                if (students.length > 0) {
+                    // Only set if no student is selected yet or if the currently selected one is gone
+                    if (!selectedStudentIdForGuru || !students.some(s => s.id === selectedStudentIdForGuru)) {
+                       selectedStudentIdForGuru = students[0].id;
                     }
-                    renderAdminChat();
+                    selectEl.value = selectedStudentIdForGuru;
                 } else {
-                    selectedStudentId = null;
-                    chatMessagesAdmin.innerHTML = '<p class="text-center text-slate-500 mt-8">Belum ada chat yang masuk.</p>';
+                    selectedStudentIdForGuru = null;
                 }
+                renderGuruBkChat();
             };
-            
-            const renderAdminChat = () => {
-                if (!selectedStudentId) {
-                    chatMessagesAdmin.innerHTML = '<p class="text-center text-slate-500 mt-8">Pilih siswa untuk melihat percakapan.</p>';
+
+            const renderGuruBkChat = () => {
+                const chatMessagesEl = document.getElementById('chat-messages-guru-bk');
+                if (!selectedStudentIdForGuru) {
+                    chatMessagesEl.innerHTML = '<p class="text-center text-slate-500 mt-8">Pilih siswa untuk memulai percakapan.</p>';
                     return;
                 }
                 const allChats = JSON.parse(localStorage.getItem('chats') || '{}');
-                const myChat = allChats[selectedStudentId] || [];
-                chatMessagesAdmin.innerHTML = '';
-                myChat.forEach(chat => {
-                    chatMessagesAdmin.innerHTML += renderChatMessage(chat.message, chat.sender === 'user' ? 'user' : 'admin');
+                const chatHistory = allChats[selectedStudentIdForGuru] || [];
+                chatMessagesEl.innerHTML = '';
+                // Ensure chat is displayed based on sender: 'user' is Siswa, 'guru' is Guru BK
+                // In this view (Guru BK), we reverse the roles for renderChatMessage function
+                chatHistory.forEach(chat => {
+                    // If the original sender was 'user' (Siswa), it's 'other' (incoming) here.
+                    // If the original sender was 'guru' (Guru BK), it's 'user' (outgoing) here.
+                    const senderRole = chat.sender === 'user' ? 'other' : 'user';
+                    chatMessagesEl.innerHTML += renderChatMessage(chat.message, senderRole, 'guru-bk');
                 });
-                chatMessagesAdmin.scrollTop = chatMessagesAdmin.scrollHeight;
+                chatMessagesEl.scrollTop = chatMessagesEl.scrollHeight;
             };
 
-            const renderMateriListAdmin = () => {
+            const renderGuruBkMateriList = () => {
                 const materiList = JSON.parse(localStorage.getItem('materi') || '[]');
-                materiListAdmin.innerHTML = '';
-                if (materiList.length === 0) {
-                    materiListAdmin.innerHTML = '<p class="text-center text-slate-500">Tidak ada materi yang tersimpan.</p>';
+                const listEl = document.getElementById('materi-list-guru-bk');
+                listEl.innerHTML = '';
+                 if (materiList.length === 0) {
+                    listEl.innerHTML = '<p class="text-center text-slate-500">Tidak ada materi yang tersimpan.</p>';
                     return;
                 }
                 materiList.forEach(materi => {
                     const el = document.createElement('div');
-                    el.className = 'p-4 bg-white rounded-lg shadow-md border-2 border-cyan-600 flex justify-between items-center';
+                    el.className = 'p-4 bg-white rounded-lg shadow-md border-2 border-cyan-600 flex justify-between items-center [transform:rotate(-1deg)]';
                     el.innerHTML = `
                         <div>
                             <h4 class="font-bold text-lg text-cyan-600">${materi.judul}</h4>
@@ -730,354 +686,313 @@
                         </div>
                         <button data-id="${materi.id}" class="delete-materi-btn bg-red-500 text-white p-2 rounded-full hover:bg-red-600 btn-water">
                              <i data-lucide="trash-2" class="w-5 h-5"></i>
-                        </button>
-                    `;
-                    materiListAdmin.appendChild(el);
+                        </button>`;
+                    listEl.appendChild(el);
                     lucide.createIcons();
                 });
             };
 
-            const renderProposalListAdmin = () => {
-                const proposals = JSON.parse(localStorage.getItem('proposals') || '[]');
-                proposalListAdmin.innerHTML = '';
-                if (proposals.length === 0) {
-                    proposalListAdmin.innerHTML = '<p class="text-center text-slate-500">Tidak ada proposal yang tersimpan.</p>';
+            const renderGuruBkLaporanList = () => {
+                const laporanBk = JSON.parse(localStorage.getItem('laporanBk') || '[]').sort((a,b) => new Date(b.tanggal) - new Date(a.tanggal));
+                const listEl = document.getElementById('laporan-bk-list-guru-bk');
+                listEl.innerHTML = '';
+                if (laporanBk.length === 0) {
+                    listEl.innerHTML = '<p class="text-center text-slate-500">Tidak ada data laporan yang tersimpan.</p>';
                     return;
                 }
-                proposals.forEach(prop => {
+                laporanBk.forEach(laporan => {
                     const el = document.createElement('div');
-                    el.className = 'p-4 bg-white rounded-lg shadow-md border-2 border-blue-600 flex justify-between items-center';
+                    const tanggal = new Date(laporan.tanggal).toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' });
+                    el.className = `p-4 bg-teal-100 rounded-lg shadow-sm flex justify-between items-center border-2 border-[#01579b]`;
                     el.innerHTML = `
                         <div>
-                            <h4 class="font-bold text-lg text-blue-600">${prop.namaKegiatan}</h4>
-                            <p class="text-sm text-slate-500">Anggaran: ${formatRupiah(prop.anggaran)}</p>
-                            <p class="text-xs text-slate-700 mt-1">${prop.deskripsi.substring(0, 100)}...</p>
+                            <p class="font-bold text-teal-700">${laporan.kegiatan}</p>
+                            <p class="text-sm text-slate-600">${laporan.deskripsi}</p>
+                            <p class="text-xs text-slate-500 mt-1">${tanggal}</p>
                         </div>
-                        <button data-id="${prop.id}" class="delete-proposal-btn bg-red-500 text-white p-2 rounded-full hover:bg-red-600 btn-water">
-                             <i data-lucide="trash-2" class="w-5 h-5"></i>
-                        </button>
-                    `;
-                    proposalListAdmin.appendChild(el);
+                        <button data-id="${laporan.id}" class="delete-laporan-bk-btn bg-red-500 text-white p-2 rounded-full hover:bg-red-600 btn-water">
+                            <i data-lucide="trash-2" class="w-5 h-5"></i>
+                        </button>`;
+                    listEl.appendChild(el);
                     lucide.createIcons();
                 });
             };
 
-            const renderKeuanganListAdmin = () => {
-                const keuangan = JSON.parse(localStorage.getItem('keuangan') || '[]');
-                keuanganListAdmin.innerHTML = '';
-                let totalPemasukan = 0;
-                let totalPengeluaran = 0;
-
-                if (keuangan.length === 0) {
-                    keuanganListAdmin.innerHTML = '<p class="text-center text-slate-500">Tidak ada data keuangan yang tersimpan.</p>';
-                } else {
-                    keuangan.forEach(transaksi => {
-                        const el = document.createElement('div');
-                        const isPemasukan = transaksi.jenis === 'pemasukan';
-                        const bgColor = isPemasukan ? 'bg-green-100' : 'bg-red-100';
-                        const textColor = isPemasukan ? 'text-green-600' : 'text-red-600';
-                        
-                        if (isPemasukan) {
-                            totalPemasukan += parseInt(transaksi.jumlah);
-                        } else {
-                            totalPengeluaran += parseInt(transaksi.jumlah);
-                        }
-                        
-                        el.className = `p-4 ${bgColor} rounded-lg shadow-sm flex justify-between items-center border-2 border-[#01579b]`;
-                        el.innerHTML = `
-                            <div>
-                                <h4 class="font-bold text-base ${textColor}">${isPemasukan ? '+' : '-'} ${formatRupiah(transaksi.jumlah)}</h4>
-                                <p class="text-sm text-slate-700">${transaksi.deskripsi}</p>
-                            </div>
-                            <button data-id="${transaksi.id}" class="delete-keuangan-btn bg-red-500 text-white p-2 rounded-full hover:bg-red-600 btn-water">
-                                <i data-lucide="trash-2" class="w-5 h-5"></i>
-                            </button>
-                        `;
-                        keuanganListAdmin.appendChild(el);
-                        lucide.createIcons();
-                    });
+            guruBkView.addEventListener('click', (e) => {
+                const actionBtn = e.target.closest('.action-btn');
+                if (actionBtn) {
+                    let allAppointments = JSON.parse(localStorage.getItem('appointments') || '[]');
+                    const id = actionBtn.dataset.id;
+                    const action = actionBtn.dataset.action;
+                    const appIndex = allAppointments.findIndex(app => app.id === id);
+                    if (appIndex > -1) {
+                        allAppointments[appIndex].status = action === 'approve' ? 'Dikonfirmasi' : 'Ditolak';
+                        localStorage.setItem('appointments', JSON.stringify(allAppointments));
+                        renderGuruBkAppointments();
+                    }
                 }
                 
-                totalPemasukanAdminEl.textContent = formatRupiah(totalPemasukan);
-                totalPengeluaranAdminEl.textContent = formatRupiah(totalPengeluaran);
-                saldoAkhirAdminEl.textContent = formatRupiah(totalPemasukan - totalPengeluaran);
-            };
+                // Hapus Materi
+                const deleteMateriBtn = e.target.closest('.delete-materi-btn');
+                if (deleteMateriBtn) {
+                    const id = deleteMateriBtn.dataset.id;
+                    let allMateri = JSON.parse(localStorage.getItem('materi') || '[]').filter(m => m.id !== id);
+                    localStorage.setItem('materi', JSON.stringify(allMateri));
+                    renderGuruBkMateriList();
+                    // Juga perlu memperbarui tampilan materi siswa jika mereka sedang melihatnya
+                    if (siswaView.classList.contains('view') && !siswaView.classList.contains('hidden')) {
+                         renderMateriListSiswa();
+                    }
+                }
+                // Hapus Laporan
+                const deleteLaporanBtn = e.target.closest('.delete-laporan-bk-btn');
+                if (deleteLaporanBtn) {
+                    const id = deleteLaporanBtn.dataset.id;
+                    let allLaporan = JSON.parse(localStorage.getItem('laporanBk') || '[]').filter(l => l.id !== id);
+                    localStorage.setItem('laporanBk', JSON.stringify(allLaporan));
+                    renderGuruBkLaporanList();
+                    // Juga perlu memperbarui tampilan laporan siswa
+                    if (siswaView.classList.contains('view') && !siswaView.classList.contains('hidden')) {
+                         renderStudentLaporanList();
+                    }
+                }
+            });
 
+            document.getElementById('chat-student-select-guru').addEventListener('change', (e) => {
+                selectedStudentIdForGuru = e.target.value;
+                renderGuruBkChat();
+            });
+
+            document.getElementById('send-btn-guru-bk').addEventListener('click', () => {
+                const chatInput = document.getElementById('chat-input-guru-bk');
+                const message = chatInput.value.trim();
+                if (message && selectedStudentIdForGuru) {
+                    let allChats = JSON.parse(localStorage.getItem('chats') || '{}');
+                    if (!allChats[selectedStudentIdForGuru]) allChats[selectedStudentIdForGuru] = [];
+                    // Sender 'guru' means the local user (Guru BK)
+                    allChats[selectedStudentIdForGuru].push({ message, sender: 'guru', timestamp: Date.now() });
+                    localStorage.setItem('chats', JSON.stringify(allChats));
+                    chatInput.value = '';
+                    renderGuruBkChat();
+                }
+            });
+            document.getElementById('chat-input-guru-bk').addEventListener('keypress', (e) => {
+                 if (e.key === 'Enter') {
+                    document.getElementById('send-btn-guru-bk').click();
+                }
+            });
+
+            document.getElementById('materi-form-guru-bk').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const allMateri = JSON.parse(localStorage.getItem('materi') || '[]');
+                const newMateri = {
+                    id: 'materi-' + Date.now(),
+                    judul: document.getElementById('materi-judul-guru-bk').value,
+                    konten: document.getElementById('materi-konten-guru-bk').value,
+                };
+                allMateri.push(newMateri);
+                localStorage.setItem('materi', JSON.stringify(allMateri));
+                e.target.reset();
+                renderGuruBkMateriList();
+                // Perbarui tampilan materi siswa secara langsung
+                if (siswaView.classList.contains('view') && !siswaView.classList.contains('hidden')) {
+                    renderMateriListSiswa();
+                }
+            });
+
+             document.getElementById('laporan-bk-form-guru-bk').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const laporanBk = JSON.parse(localStorage.getItem('laporanBk') || '[]');
+                const newLaporan = {
+                    id: 'laporan-' + Date.now(),
+                    kegiatan: document.getElementById('laporan-bk-kegiatan-guru-bk').value,
+                    deskripsi: document.getElementById('laporan-bk-deskripsi-guru-bk').value,
+                    tanggal: document.getElementById('laporan-bk-tanggal-guru-bk').value,
+                };
+                laporanBk.push(newLaporan);
+                localStorage.setItem('laporanBk', JSON.stringify(laporanBk));
+                e.target.reset();
+                renderGuruBkLaporanList();
+                // Perbarui tampilan laporan siswa secara langsung
+                 if (siswaView.classList.contains('view') && !siswaView.classList.contains('hidden')) {
+                    renderStudentLaporanList();
+                }
+            });
+            
+            guruBkView.querySelectorAll('.tab-water').forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const targetTab = tab.dataset.tab;
+                    switchTab(guruBkView, targetTab);
+                    if (targetTab === 'jadwal') renderGuruBkAppointments();
+                    if (targetTab === 'chat') renderGuruBkChatUsers();
+                    if (targetTab === 'materi') renderGuruBkMateriList();
+                    if (targetTab === 'laporan-bk') renderGuruBkLaporanList();
+                });
+            });
+
+            // =============================
+            // === LOGIKA UNTUK ADMIN ======
+            // =============================
+            const adminPassword = 'admin123';
+
+            function initAdminView() {
+                renderUserListAdmin();
+                showView(adminView);
+            }
+            
             const renderUserListAdmin = () => {
-                const allAccounts = JSON.parse(localStorage.getItem('studentAccounts') || '[]');
+                const allAccounts = JSON.parse(localStorage.getItem('userAccounts') || '[]');
+                const userListAdmin = document.getElementById('user-list-admin');
                 userListAdmin.innerHTML = '';
                 if (allAccounts.length === 0) {
-                    userListAdmin.innerHTML = '<p class="text-center text-slate-500">Belum ada akun siswa yang dibuat.</p>';
+                    userListAdmin.innerHTML = '<p class="text-center text-slate-500">Belum ada akun yang dibuat.</p>';
                     return;
                 }
                 allAccounts.forEach(acc => {
                     const el = document.createElement('div');
+                    const roleBadge = acc.role === 'siswa' 
+                        ? '<span class="text-xs bg-cyan-200 text-cyan-800 px-2 py-1 rounded-full">Siswa</span>' 
+                        : '<span class="text-xs bg-teal-200 text-teal-800 px-2 py-1 rounded-full">Guru BK</span>';
+
                     el.className = 'p-4 bg-white rounded-lg shadow-md border-2 border-purple-600 flex justify-between items-center';
                     el.innerHTML = `
                         <div>
                             <h4 class="font-bold text-lg text-purple-600">${acc.name}</h4>
                             <p class="text-xs text-slate-500">Username: ${acc.username}</p>
                         </div>
-                        <button data-id="${acc.id}" class="delete-user-btn bg-red-500 text-white p-2 rounded-full hover:bg-red-600 btn-water">
-                            <i data-lucide="trash-2" class="w-5 h-5"></i>
-                        </button>
-                    `;
+                        <div class="flex items-center gap-4">
+                            ${roleBadge}
+                            <button data-id="${acc.id}" class="delete-user-btn bg-red-500 text-white p-2 rounded-full hover:bg-red-600 btn-water">
+                                <i data-lucide="trash-2" class="w-5 h-5"></i>
+                            </button>
+                        </div>`;
                     userListAdmin.appendChild(el);
                     lucide.createIcons();
                 });
             };
 
-            const updateAppointmentStatus = (id, newStatus) => {
-                let allAppointments = JSON.parse(localStorage.getItem('appointments') || '[]');
-                const appIndex = allAppointments.findIndex(app => app.id === id);
-                if (appIndex > -1) {
-                    allAppointments[appIndex].status = newStatus;
-                    localStorage.setItem('appointments', JSON.stringify(allAppointments));
-                    renderAdminAppointments();
-                }
-            };
-            
-            adminList.addEventListener('click', (e) => {
-                if (e.target.closest('.action-btn')) {
-                    const btn = e.target.closest('.action-btn');
-                    const id = btn.getAttribute('data-id');
-                    const action = btn.getAttribute('data-action');
-                    updateAppointmentStatus(id, action === 'approve' ? 'Dikonfirmasi' : 'Ditolak');
-                }
-            });
-
-            refreshBtn.addEventListener('click', renderAdminAppointments);
-
-            chatStudentSelect.addEventListener('change', (e) => {
-                selectedStudentId = e.target.value;
-                renderAdminChat();
-            });
-
-            sendBtnAdmin.addEventListener('click', () => {
-                const message = chatInputAdmin.value.trim();
-                if (message && selectedStudentId) {
-                    let allChats = JSON.parse(localStorage.getItem('chats') || '{}');
-                    if (!allChats[selectedStudentId]) {
-                        allChats[selectedStudentId] = [];
-                    }
-                    allChats[selectedStudentId].push({ message, sender: 'admin', timestamp: Date.now() });
-                    localStorage.setItem('chats', JSON.stringify(allChats));
-                    chatInputAdmin.value = '';
-                    renderAdminChat();
-                }
-            });
-            
-            chatInputAdmin.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    sendBtnAdmin.click();
-                }
-            });
-
-            materiForm.addEventListener('submit', (e) => {
+            document.getElementById('create-user-form').addEventListener('submit', (e) => {
                 e.preventDefault();
-                const allMateri = JSON.parse(localStorage.getItem('materi') || '[]');
-                const newMateri = {
-                    id: 'materi-' + Date.now(),
-                    judul: document.getElementById('materi-judul').value,
-                    konten: document.getElementById('materi-konten').value,
-                };
-                allMateri.push(newMateri);
-                localStorage.setItem('materi', JSON.stringify(allMateri));
-                materiForm.reset();
-                renderMateriListAdmin();
-                renderMateriListSiswa();
-            });
-
-            materiListAdmin.addEventListener('click', (e) => {
-                if (e.target.closest('.delete-materi-btn')) {
-                    const btn = e.target.closest('.delete-materi-btn');
-                    const id = btn.getAttribute('data-id');
-                    let allMateri = JSON.parse(localStorage.getItem('materi') || '[]');
-                    allMateri = allMateri.filter(materi => materi.id !== id);
-                    localStorage.setItem('materi', JSON.stringify(allMateri));
-                    renderMateriListAdmin();
-                    renderMateriListSiswa();
-                }
-            });
-
-            proposalForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const proposals = JSON.parse(localStorage.getItem('proposals') || '[]');
-                const newProposal = {
-                    id: 'proposal-' + Date.now(),
-                    namaKegiatan: document.getElementById('proposal-nama-kegiatan').value,
-                    deskripsi: document.getElementById('proposal-deskripsi').value,
-                    anggaran: document.getElementById('proposal-anggaran').value,
-                };
-                proposals.push(newProposal);
-                localStorage.setItem('proposals', JSON.stringify(proposals));
-                proposalForm.reset();
-                renderProposalListAdmin();
-                renderProposalListSiswa();
-            });
-
-            proposalListAdmin.addEventListener('click', (e) => {
-                if (e.target.closest('.delete-proposal-btn')) {
-                    const btn = e.target.closest('.delete-proposal-btn');
-                    const id = btn.getAttribute('data-id');
-                    let proposals = JSON.parse(localStorage.getItem('proposals') || '[]');
-                    proposals = proposals.filter(prop => prop.id !== id);
-                    localStorage.setItem('proposals', JSON.stringify(proposals));
-                    renderProposalListAdmin();
-                    renderProposalListSiswa();
-                }
-            });
-
-            keuanganForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const keuangan = JSON.parse(localStorage.getItem('keuangan') || '[]');
-                const newTransaction = {
-                    id: 'keuangan-' + Date.now(),
-                    deskripsi: document.getElementById('keuangan-deskripsi').value,
-                    jenis: document.getElementById('keuangan-jenis').value,
-                    jumlah: document.getElementById('keuangan-jumlah').value,
-                };
-                keuangan.push(newTransaction);
-                localStorage.setItem('keuangan', JSON.stringify(keuangan));
-                keuanganForm.reset();
-                renderKeuanganListAdmin();
-                renderKeuanganListSiswa();
-            });
-
-            keuanganListAdmin.addEventListener('click', (e) => {
-                if (e.target.closest('.delete-keuangan-btn')) {
-                    const btn = e.target.closest('.delete-keuangan-btn');
-                    const id = btn.getAttribute('data-id');
-                    let keuangan = JSON.parse(localStorage.getItem('keuangan') || '[]');
-                    keuangan = keuangan.filter(trans => trans.id !== id);
-                    localStorage.setItem('keuangan', JSON.stringify(keuangan));
-                    renderKeuanganListAdmin();
-                    renderKeuanganListSiswa();
-                }
-            });
-
-            createUserForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const accounts = JSON.parse(localStorage.getItem('studentAccounts') || '[]');
+                const accounts = JSON.parse(localStorage.getItem('userAccounts') || '[]');
                 const username = document.getElementById('user-username').value;
-
                 if (accounts.some(acc => acc.username === username)) {
                     alert('Username sudah digunakan!');
                     return;
                 }
-
                 const newAccount = {
-                    id: 'siswa-' + Date.now(),
+                    id: (document.getElementById('user-role').value) + '-' + Date.now(),
+                    role: document.getElementById('user-role').value,
                     name: document.getElementById('user-nama').value,
                     username: username,
                     password: document.getElementById('user-password').value,
                 };
                 accounts.push(newAccount);
-                localStorage.setItem('studentAccounts', JSON.stringify(accounts));
-                createUserForm.reset();
+                localStorage.setItem('userAccounts', JSON.stringify(accounts));
+                e.target.reset();
                 renderUserListAdmin();
             });
 
-            userListAdmin.addEventListener('click', (e) => {
+            document.getElementById('user-list-admin').addEventListener('click', (e) => {
                 const deleteBtn = e.target.closest('.delete-user-btn');
                 if (deleteBtn) {
-                    const idToDelete = deleteBtn.getAttribute('data-id');
-                    
-                    let accounts = JSON.parse(localStorage.getItem('studentAccounts') || '[]');
-                    accounts = accounts.filter(acc => acc.id !== idToDelete);
-                    localStorage.setItem('studentAccounts', JSON.stringify(accounts));
-                    
-                    let appointments = JSON.parse(localStorage.getItem('appointments') || '[]');
-                    appointments = appointments.filter(app => app.studentId !== idToDelete);
-                    localStorage.setItem('appointments', JSON.stringify(appointments));
-
-                    let chats = JSON.parse(localStorage.getItem('chats') || '{}');
-                    delete chats[idToDelete];
-                    localStorage.setItem('chats', JSON.stringify(chats));
-
+                    const idToDelete = deleteBtn.dataset.id;
+                    let accounts = JSON.parse(localStorage.getItem('userAccounts') || '[]').filter(acc => acc.id !== idToDelete);
+                    localStorage.setItem('userAccounts', JSON.stringify(accounts));
+                    if (idToDelete.startsWith('siswa')) {
+                        let appointments = JSON.parse(localStorage.getItem('appointments') || '[]').filter(app => app.studentId !== idToDelete);
+                        localStorage.setItem('appointments', JSON.stringify(appointments));
+                        let chats = JSON.parse(localStorage.getItem('chats') || '{}');
+                        delete chats[idToDelete];
+                        localStorage.setItem('chats', JSON.stringify(chats));
+                        // Jika siswa yang dihapus sedang dipilih oleh Guru BK
+                        if (selectedStudentIdForGuru === idToDelete) {
+                            selectedStudentIdForGuru = null;
+                            // Perlu update tampilan Guru BK jika sedang terbuka
+                            if (guruBkView.classList.contains('view') && !guruBkView.classList.contains('hidden')) {
+                                renderGuruBkChatUsers();
+                            }
+                        }
+                    }
                     renderUserListAdmin();
-                    renderAdminAppointments();
-                    renderAdminChatUsers();
                 }
-            });
-
-            adminTabs.forEach(tab => {
-                tab.addEventListener('click', () => {
-                    switchTab(adminTabs, adminTabContents, tab.getAttribute('data-tab'));
-                    if (tab.getAttribute('data-tab') === 'chat') renderAdminChatUsers();
-                    if (tab.getAttribute('data-tab') === 'materi') renderMateriListAdmin();
-                    if (tab.getAttribute('data-tab') === 'proposal') renderProposalListAdmin();
-                    if (tab.getAttribute('data-tab') === 'keuangan') renderKeuanganListAdmin();
-                    if (tab.getAttribute('data-tab') === 'users') renderUserListAdmin();
-                });
             });
 
             // ======================================
             // === KONTROL NAVIGASI & INISIASI ======
             // ======================================
             showLoginSiswaBtn.addEventListener('click', () => showView(studentLoginView));
+            showLoginGuruBkBtn.addEventListener('click', () => showView(guruBkLoginView));
             showLoginAdminBtn.addEventListener('click', () => showView(adminLoginView));
             backToRoleBtns.forEach(btn => btn.addEventListener('click', () => showView(roleSelectionView)));
 
             studentLoginForm.addEventListener('submit', (e) => {
                 e.preventDefault();
-                const username = studentUsernameInput.value;
-                const password = studentPasswordInput.value;
-                const accounts = JSON.parse(localStorage.getItem('studentAccounts') || '[]');
-                const account = accounts.find(acc => acc.username === username && acc.password === password);
-                
+                const username = e.target.elements['student-username-input'].value;
+                const password = e.target.elements['student-password-input'].value;
+                const accounts = JSON.parse(localStorage.getItem('userAccounts') || '[]');
+                const account = accounts.find(acc => acc.role === 'siswa' && acc.username === username && acc.password === password);
+                const errorEl = document.getElementById('student-login-error');
                 if (account) {
-                    studentLoginError.classList.add('hidden');
+                    errorEl.classList.add('hidden');
                     localStorage.setItem('userRole', 'siswa');
-                    localStorage.setItem('studentId', account.id);
+                    localStorage.setItem('currentUserId', account.id);
                     initSiswaView();
                 } else {
-                    studentLoginError.classList.remove('hidden');
+                    errorEl.classList.remove('hidden');
+                }
+            });
+
+            guruBkLoginForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const username = e.target.elements['guru-bk-username-input'].value;
+                const password = e.target.elements['guru-bk-password-input'].value;
+                const accounts = JSON.parse(localStorage.getItem('userAccounts') || '[]');
+                const account = accounts.find(acc => acc.role === 'guru-bk' && acc.username === username && acc.password === password);
+                const errorEl = document.getElementById('guru-bk-login-error');
+                if (account) {
+                    errorEl.classList.add('hidden');
+                    localStorage.setItem('userRole', 'guru-bk');
+                    localStorage.setItem('currentUserId', account.id);
+                    initGuruBkView();
+                } else {
+                    errorEl.classList.remove('hidden');
                 }
             });
             
             adminLoginForm.addEventListener('submit', (e) => {
                 e.preventDefault();
-                if (adminPasswordInput.value === adminPassword) {
-                    adminLoginError.classList.add('hidden');
+                const password = e.target.elements['admin-password-input'].value;
+                const errorEl = document.getElementById('admin-login-error');
+                if (password === adminPassword) {
+                    errorEl.classList.add('hidden');
                     localStorage.setItem('userRole', 'admin');
                     initAdminView();
                 } else {
-                    adminLoginError.classList.remove('hidden');
-                    adminPasswordInput.value = '';
+                    errorEl.classList.remove('hidden');
+                    e.target.reset();
                 }
             });
 
             logoutBtns.forEach(btn => {
                 btn.addEventListener('click', () => {
                     localStorage.removeItem('userRole');
-                    localStorage.removeItem('studentId');
+                    localStorage.removeItem('currentUserId');
                     showView(roleSelectionView);
                 });
             });
 
+            // Inisiasi saat halaman dimuat
             const savedRole = localStorage.getItem('userRole');
             if (savedRole === 'siswa') {
                 initSiswaView();
+            } else if (savedRole === 'guru-bk') {
+                initGuruBkView();
             } else if (savedRole === 'admin') {
                 initAdminView();
             } else {
                 showView(roleSelectionView);
             }
-
-            window.addEventListener('storage', (e) => {
-                const currentRole = localStorage.getItem('userRole');
-                if (e.key === 'studentAccounts' || e.key === 'appointments' || e.key === 'chats' || e.key === 'materi' || e.key === 'proposals' || e.key === 'keuangan') {
-                    if (currentRole === 'siswa') {
-                        initSiswaView();
-                    } else if (currentRole === 'admin') {
-                        initAdminView();
-                    }
-                }
-            });
-
         });
     </script>
 </body>
 </html>
-
